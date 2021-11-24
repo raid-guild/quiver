@@ -2,7 +2,7 @@ import { utils } from 'ethers'
 
 import { isSupportedChain } from './helpers'
 
-import { SUPPORTED_NETWORKS } from '@/web3/constants'
+import { SUPPORTED_NETWORKS } from './constants'
 
 export const switchChainOnMetaMask = async (
   chainId: number

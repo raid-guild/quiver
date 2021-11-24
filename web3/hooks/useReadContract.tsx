@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { Awaited, ContractFunctions, ContractInstance } from './types'
 
-import { AUTO_UPDATE_BALANCE_INTERVAL } from '@/web3/constants'
+import { AUTO_UPDATE_BALANCE_INTERVAL } from '../constants'
 export const useReadContract = <
   TContract extends ContractInstance = any,
   TFunctionName extends string & keyof ContractFunctions<TContract> = string

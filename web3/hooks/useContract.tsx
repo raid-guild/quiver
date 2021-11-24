@@ -1,20 +1,34 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract, ContractInterface } from '@ethersproject/contracts'
 
 import { useProvider } from '../WalletContext'
 import { ContractInstance, ContractFactory } from './types'
 
 export const useContract = <TContract extends ContractInstance = any>(
   address: string,
-  typechainFactory: ContractFactory<TContract>
+  typechainFactoryOrABI: ContractFactory<TContract> | ContractInterface
 ): {
   contract: TContract | Contract | null
   error: Error | null
 } => {
   const provider = useProvider()
   const signer = provider?.getSigner()
-
   if (signer) {
-    const contract = typechainFactory.connect(address, signer)
+    let contract: TContract | Contract
+    if (
+      typeof typechainFactoryOrABI === 'function' &&
+      'connect' in typechainFactoryOrABI
+    ) {
+      contract = (typechainFactoryOrABI as ContractFactory<TContract>).connect(
+        address,
+        signer
+      ) as TContract
+    } else {
+      contract = new Contract(
+        address,
+        typechainFactoryOrABI as ContractInterface,
+        signer
+      )
+    }
     return {
       contract,
       error: null,
