@@ -1,3 +1,4 @@
+import { SUPPORTED_NETWORKS, DEFAULT_NETWORK } from './constants'
 import { providers } from 'ethers'
 import React, {
   createContext,
@@ -10,7 +11,6 @@ import React, {
 import { toast } from 'react-hot-toast'
 import Web3Modal from 'web3modal'
 
-import { SUPPORTED_NETWORKS, DEFAULT_NETWORK } from './constants'
 import { isSupportedChain } from './helpers'
 import { switchChainOnMetaMask } from './metamask'
 import { providerOptions } from './providerOptions'
@@ -111,7 +111,12 @@ export const WalletProvider: React.FC = ({ children }) => {
         disconnect()
       })
       modalProvider.on('chainChanged', () => {
-        disconnect()
+        if (!isSupportedChain(Number(modalProvider.chainId))) {
+          console.log(
+            'You have switched to an unsupported chain, Disconnecting from Metamask...'
+          )
+          disconnect()
+        }
       })
     } catch (web3Error) {
       // eslint-disable-next-line no-console
@@ -124,7 +129,13 @@ export const WalletProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     const load = async () => {
-      if (web3Modal.cachedProvider) {
+      /**
+       * Only try to connect when metamask is unlocked.
+       * This prevents unnecessary popup on page load.
+       */
+      const isMetamaskUnlocked =
+        (await window.ethereum?._metamask?.isUnlocked()) ?? false
+      if (isMetamaskUnlocked && web3Modal.cachedProvider) {
         await connectWallet()
       } else {
         setConnecting(false)
