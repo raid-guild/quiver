@@ -2,22 +2,17 @@ import { utils } from 'ethers'
 
 import { isSupportedChain } from './helpers'
 
-import { SUPPORTED_NETWORKS } from './constants'
+import { NETWORKS } from './constants'
 
-export const switchChainOnMetaMask = async (
-  chainId: number
-): Promise<boolean> => {
-  if (!isSupportedChain(chainId)) return false
+export const switchChainOnMetaMask = async (chainId: number): Promise<boolean> => {
+  if (!isSupportedChain(chainId.toString())) return false
 
-  const { name, symbol } = SUPPORTED_NETWORKS[chainId] || {}
-  const networkName = SUPPORTED_NETWORKS[chainId].name
-  const rpcUrl = SUPPORTED_NETWORKS[chainId].rpc
-  const explorerUrl = SUPPORTED_NETWORKS[chainId].explorer
+  const { name, symbol } = NETWORKS[chainId] || {}
+  const networkName = NETWORKS[chainId].name
+  const rpcUrl = NETWORKS[chainId].rpc
+  const explorerUrl = NETWORKS[chainId].explorer
 
-  if (
-    !(name && symbol && networkName && rpcUrl && explorerUrl && window.ethereum)
-  )
-    return false
+  if (!(name && symbol && networkName && rpcUrl && explorerUrl && window.ethereum)) return false
 
   try {
     await window.ethereum.request({

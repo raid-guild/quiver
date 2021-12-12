@@ -4,7 +4,7 @@ import { IProviderOptions } from 'web3modal'
 
 import CoinbaseLogo from './images/coinbase-wallet.svg'
 
-import { SUPPORTED_NETWORKS } from './constants'
+import { NETWORKS } from './constants'
 
 interface ConnectorOptions {
   appName: string
@@ -17,9 +17,9 @@ export const providerOptions: IProviderOptions = {
     package: WalletConnectProvider,
     options: {
       rpc: {
-        1: SUPPORTED_NETWORKS[1].rpc,
-        4: SUPPORTED_NETWORKS[4].rpc,
-        1337: SUPPORTED_NETWORKS[1337].rpc,
+        1: NETWORKS["1"].rpc,
+        4: NETWORKS["4"].rpc,
+        1337: NETWORKS["1337"].rpc,
       },
     },
   },
@@ -31,7 +31,7 @@ export const providerOptions: IProviderOptions = {
     },
     options: {
       appName: 'App Name',
-      networkUrl: SUPPORTED_NETWORKS[137],
+      networkUrl: NETWORKS["137"],
       chainId: 137,
     },
     package: WalletLink,

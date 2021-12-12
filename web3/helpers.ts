@@ -1,15 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { formatUnits } from '@ethersproject/units'
 
-import { SUPPORTED_NETWORKS } from './constants'
+import { NETWORKS, SUPPORTED_NETWORKS } from './constants'
 
-export const getTransactionUrl = (chainId: number, hash: string): string =>
-  `${SUPPORTED_NETWORKS[chainId].explorer}/tx/${hash}`
+export const parseTokenURI = (text) => text.replace('ipfs://', 'https://ipfs.io/ipfs/')
 
-export const isSupportedChain = (chainId: number): boolean =>
-  Object.values(SUPPORTED_NETWORKS).find(
-    (network) => network.chainId === chainId
-  ) !== undefined
+export const getTransactionUrl = (chainId: string, hash: string): string =>
+  `${NETWORKS[chainId].explorer}/tx/${hash}`
+
+export const isSupportedChain = (chainId: string): boolean =>
+  SUPPORTED_NETWORKS.split(',').find((chain) => chain.trim() === chainId) !== undefined
 
 export const timeout = (ms: number): Promise<void> => {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -18,13 +18,11 @@ export const timeout = (ms: number): Promise<void> => {
 export const formatAddress = (
   address: string | null | undefined,
   ensName?: string | null,
-  chars = 4
+  chars = 4,
 ): string => {
   if (ensName) return ensName
   else if (address)
-    return `${address.substring(0, chars)}...${address.substring(
-      address.length - chars
-    )}`
+    return `${address.substring(0, chars)}...${address.substring(address.length - chars)}`
   else return ''
 }
 
@@ -42,7 +40,7 @@ export const formatToUSD = (usdPrice: number, number?: BigNumber) => {
 
 export const formatToken = (
   number?: BigNumber | string,
-  decimals: string | number = 18
+  decimals: string | number = 18,
 ): string | undefined => {
   if (!number) {
     return

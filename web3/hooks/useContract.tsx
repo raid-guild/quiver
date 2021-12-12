@@ -1,32 +1,38 @@
 import { Contract, ContractInterface } from '@ethersproject/contracts'
-
-import { useProvider } from '../WalletContext'
-import { ContractInstance, ContractFactory } from './types'
+import { JsonRpcProvider } from '@ethersproject/providers'
+import { DEFAULT_NETWORK, NETWORKS } from '../constants'
+import { useWallet } from '../WalletContext'
+import { ContractFactory, ContractInstance } from './types'
 
 export const useContract = <TContract extends ContractInstance = any>(
   address: string,
-  typechainFactoryOrABI: ContractFactory<TContract> | ContractInterface
+  typechainFactoryOrABI: ContractFactory<TContract> | ContractInterface,
+  options?: {
+    useStaticProvider?: boolean // if the wallet is not connected use a static provider
+  },
 ): {
   contract: TContract | Contract | null
   error: Error | null
 } => {
-  const provider = useProvider()
-  const signer = provider?.getSigner()
-  if (signer) {
+  const { provider, isConnected } = useWallet()
+
+  const signerOrProvider =
+    options?.useStaticProvider && !isConnected
+      ? new JsonRpcProvider(NETWORKS[DEFAULT_NETWORK].rpc, DEFAULT_NETWORK)
+      : provider.getSigner()
+
+  if (signerOrProvider) {
     let contract: TContract | Contract
-    if (
-      typeof typechainFactoryOrABI === 'function' &&
-      'connect' in typechainFactoryOrABI
-    ) {
+    if (typeof typechainFactoryOrABI === 'function' && 'connect' in typechainFactoryOrABI) {
       contract = (typechainFactoryOrABI as ContractFactory<TContract>).connect(
         address,
-        signer
+        signerOrProvider,
       ) as TContract
     } else {
       contract = new Contract(
         address,
         typechainFactoryOrABI as ContractInterface,
-        signer
+        signerOrProvider,
       )
     }
     return {

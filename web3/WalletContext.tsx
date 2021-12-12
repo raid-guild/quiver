@@ -1,4 +1,4 @@
-import { SUPPORTED_NETWORKS, DEFAULT_NETWORK } from './constants'
+import { NETWORKS, DEFAULT_NETWORK } from './constants'
 import { providers } from 'ethers'
 import React, {
   createContext,
@@ -77,18 +77,18 @@ export const WalletProvider: React.FC = ({ children }) => {
     const ethersProvider = new providers.Web3Provider(provider)
 
     let network = Number(provider.chainId)
-    if (!isSupportedChain(network)) {
+    if (!isSupportedChain(network.toString())) {
       const success =
         isMetamaskProvider(ethersProvider) &&
         (await switchChainOnMetaMask(
-          SUPPORTED_NETWORKS[DEFAULT_NETWORK].chainId
+          NETWORKS[DEFAULT_NETWORK].chainId
         ))
       if (!success) {
-        const errorMsg = `Network not supported, please switch to ${SUPPORTED_NETWORKS[DEFAULT_NETWORK].name}`
+        const errorMsg = `Network not supported, please switch to ${NETWORKS[DEFAULT_NETWORK].name}`
         toast.error(errorMsg)
         throw new Error(errorMsg)
       }
-      network = SUPPORTED_NETWORKS[DEFAULT_NETWORK].chainId
+      network = NETWORKS[DEFAULT_NETWORK].chainId
     }
 
     const signerAddress = await ethersProvider.getSigner().getAddress()
@@ -111,7 +111,7 @@ export const WalletProvider: React.FC = ({ children }) => {
         disconnect()
       })
       modalProvider.on('chainChanged', () => {
-        if (!isSupportedChain(Number(modalProvider.chainId))) {
+        if (!isSupportedChain(Number(modalProvider.chainId).toString())) {
           console.log(
             'You have switched to an unsupported chain, Disconnecting from Metamask...'
           )
