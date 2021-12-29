@@ -48,7 +48,7 @@ export const useWriteContract = <
     }
 
     cleanup()
-  }, [(contract as Contract)?.address, functionName])
+  }, [(contract as Contract)?.signer, functionName])
 
   const mutate = useCallback(
     async (
@@ -72,7 +72,7 @@ export const useWriteContract = <
         setError(error as Error)
       }
     },
-    [(contract as Contract)?.address, functionName]
+    [(contract as Contract)?.signer, functionName]
   )
 
   return [
