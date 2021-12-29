@@ -53,3 +53,17 @@ export const formatToken = (
   }
   return formatted
 }
+
+
+export const parseTxErrorMessage = (error: any) => {
+  if (error?.error?.message && error.error.message.includes('reverted')) {
+    return error.error.message.split('reverted:')[1];
+  }
+
+  if (error.reason) {
+    return error.reason;
+  }
+
+  return error.message;
+
+};

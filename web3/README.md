@@ -317,4 +317,6 @@ formatToUSD - given a usd price and the number of tokens, it will return the for
 
 formatToken - given a bignumber token (in wei) it will convert the number to string and also print the token value in ethers.
 
+parseTxErrorMessage - parses the error messages from the transaction and returns a readable message.
+
 Other methods can be found in the helpers.ts file.
