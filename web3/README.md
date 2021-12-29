@@ -271,9 +271,21 @@ You can also use a ContractInterface ABI, however you wouldnt get any autocomple
 
 `useReadContract` allows you to access public view functions or variables of the contract. Check your useReadContract.tsx for more implementation details.
 
-useReadContract needs the contract object from useContract, the name of the function and options (where you can specify if you'd like to auto update the value or not).
+useReadContract needs the contract object from useContract, the name of the function and options (where you can specify if you'd like to auto update the value or not)(.
 
 The AUTO_UPDATE_BALANCE_INTERVAL constant is used to set the interval for auto updating the value.
+
+In case you would like to update the value manually (on button click) you can use the mutate function returned in the hook.
+
+```jsx
+const { mutate, response } = useReadContract(contract, "functionName");
+
+const handleClick = () => {
+  // Do stuff Here
+
+  mutate();
+};
+```
 
 `useWriteContract` allows you to access public write functions of the contract. Check your useWriteContract.tsx for more implementation details.
 

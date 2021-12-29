@@ -17,9 +17,12 @@ export const useReadContract = <
 ): {
   loading: boolean
   error: Error | null
-  response:
-    | Awaited<ReturnType<ContractFunctions<TContract>[TFunctionName]>>
-    | undefined
+  response: Awaited<ReturnType<ContractFunctions<TContract>[TFunctionName]>> | undefined
+  mutate: () => Promise<{
+    loading: boolean
+    error: Error
+    response: any
+  }>
 } => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
@@ -65,9 +68,12 @@ export const useReadContract = <
     fetchResponse()
   }, [(contract as Contract)?.address])
 
+  const mutate = fetchResponse
+
   return {
     loading,
     error,
     response,
+    mutate,
   }
 }
