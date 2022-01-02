@@ -18,7 +18,7 @@ export const timeout = (ms: number): Promise<void> => {
 export const formatAddress = (
   address: string | null | undefined,
   ensName?: string | null,
-  chars = 4,
+  chars = 6,
 ): string => {
   if (ensName) return ensName
   else if (address)
