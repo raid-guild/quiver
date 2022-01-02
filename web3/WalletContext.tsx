@@ -163,8 +163,3 @@ export const WalletProvider: React.FC = ({ children }) => {
 }
 
 export const useWallet = (): WalletContextType => useContext(WalletContext)
-
-export function useProvider() {
-  const context = useContext(WalletContext)
-  return context.provider
-}
