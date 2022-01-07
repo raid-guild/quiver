@@ -2,7 +2,7 @@
 
 Makes smart contract integrations on your react web app very easy.
 
-Might be buggy - Do not use it yet
+The DOCS are old and might not work. TBD
 
 ## Motivation
 
