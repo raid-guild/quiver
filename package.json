@@ -36,8 +36,8 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "quiver",
-  "author": "Harsh",
+  "name": "@raidguild/quiver",
+  "author": "Raid Guild",
   "module": "dist/quiver.esm.js",
   "size-limit": [
     {
@@ -68,5 +68,6 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21"
-  }
+  },
+  "contributors": ["midgerate"]
 }

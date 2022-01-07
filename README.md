@@ -1,160 +1,388 @@
-# TSDX React User Guide
+# Quiver
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
+Makes smart contract integrations on your react web app very easy.
 
-> This TSDX setup is meant for developing React component libraries (not apps!) that can be published to NPM. If you’re looking to build a React-based app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
+Might be buggy - Do not use it yet
 
-> If you’re new to TypeScript and React, checkout [this handy cheatsheet](https://github.com/sw-yx/react-typescript-cheatsheet/)
+## Motivation
 
-## Commands
+Current Problems with web3 integrations on React -
 
-TSDX scaffolds your new library inside `/src`, and also sets up a [Parcel-based](https://parceljs.org) playground for it inside `/example`.
+1. It's a very time consuming process to integrate a smart contract with a react web app. (Create a context, expose methods to connect with the wallet, reading and writing from the contract and so on.)
+2. Every developer does it in their own style, which makes it harder for other devs to understand.
 
-The recommended workflow is to run TSDX in one terminal:
+Quiver aims
 
-```bash
-npm start # or yarn start
+1. to decrease the time it takes to integrate from 15 hours to 2 hours
+2. to make it faster to add more contract interactions to their codebase
+3. to focus on the business logic rather than web3 specifics.
+
+## Current state of the project
+
+Its currently not a library, so you need to copy paste the folder to your project and configure a few things, but it's a good start.
+There are also certain limitations to the current implementation
+
+1. It can only be used in typescript projects (you are free to remove the types from the project if you want)
+2. It can only interact with smart contracts for which we have typechain generated type definitions.
+
+It needs the the following libraries
+
+- ethers.js
+- web3modal
+- typescript
+- lodash (Optional)
+- react-hot-toast (Optional)
+- walletconnect (Optional)
+- walletlink (Optional)
+
+You can remove optional libraries but then you will have to fix the code that uses them. (there's not a lot of it though. :))
+
+## TODO
+
+- [] Provide starter apps for both CRA and Next.js with hardhat
+- [] Better documentation
+- [] Add subgraphs hook
+
+## Quickstart
+
+1. Download the repo
+2. Copy the web3 folder to the root of your frontend project.
+3. Open constants.ts in the web3 folder and configure the Supported networks, default network and the auto update time interval.
+4. Open providerOptions.ts in the web3 folder and configure the wallets you want your users to connect with.
+5. If you see errors in the web3 folder, most likely you are missing dependencies, just install them.
+6. Go to the index.js or root file of your project and import WalletProvider from web3 WalletContext.
+
+Example
+
+```jsx
+import { ChakraProvider } from '@chakra-ui/react';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import { Toaster } from 'react-hot-toast';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import { GlobalProvider } from '@/contexts/GlobalContext';
+import Fonts from '@/theme/Fonts';
+import { theme } from '@/theme/theme';
+import { WalletProvider } from '@/web3/WalletContext';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <WalletProvider>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 3000,
+        }}
+      />
+      <Router>
+        <ChakraProvider theme={theme}>
+          <Fonts />
+          <App />
+        </ChakraProvider>
+      </Router>
+    </WalletProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+Now you should be able to interact with the contracts. Check out all the use cases and examples below to understand how they work.
 
-Then run the example inside another:
+### Connect with wallet
 
-```bash
-cd example
-npm i # or yarn to install dependencies
-npm start # or yarn start
+Example
+
+```jsx
+import { Button } from '@chakra-ui/button';
+import { FC } from 'react';
+
+import { useWallet } from '@/web3/WalletContext';
+import { formatAddress } from '@/web3/helpers';
+
+export const ConnectWallet: FC = () => {
+  const {
+    connectWallet,
+    isConnecting,
+    isConnected,
+    disconnect,
+    address,
+  } = useWallet();
+
+  return (
+    <>
+      {!isConnected && (
+        <Button
+          size="sm"
+          id="button"
+          disabled={isConnecting}
+          onClick={() => !isConnected && connectWallet()}
+        >
+          {isConnecting
+            ? 'Connecting...'
+            : isConnected
+            ? 'Connected'
+            : 'Connect Wallet'}
+        </Button>
+      )}
+      {isConnected && (
+        <>
+          {formatAddress(address, undefined, 7)}
+          <Button w="full" size="sm" onClick={() => disconnect()}>
+            Disconnect
+          </Button>
+        </>
+      )}
+    </>
+  );
+};
 ```
 
-The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**, we use [Parcel's aliasing](https://parceljs.org/module_resolution.html#aliases).
+As you can see above, `useWallet` hook exposes several methods. Most commonly you will need the `address` of the user connected with the wallet.
 
-To do a one-off build, use `npm run build` or `yarn build`.
+In this case, we also use connectWallet, disconnect, isConnecting, isConnected to show an interactive connect to wallet button.
 
-To run tests, use `npm test` or `yarn test`.
+Check out WalletContext.tsx to understand how it works and if you would like to change the behaviour of switching the network, or displaying an error if the network is not supported etc.
 
-## Configuration
+### Read from and Write to contract
 
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
+Example
 
-### Jest
+```jsx
+import { Box, Heading, Stack, Text, VStack } from '@chakra-ui/layout';
+import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/table';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 
-Jest tests are set up to run with `npm test` or `yarn test`.
+import { BrandedBox, OutlineButton } from '@/components';
+import { Staking__factory } from '@/types/typechain';
+import { formatToken, formatToUSD } from '@/web3/helpers';
+import {
+  useCGPrice,
+  useContract,
+  useReadContract,
+  useWriteContract,
+} from '@/web3/hooks';
 
-### Bundle analysis
+export const PoolSummary = ({
+  contractAddress,
+}: {
+  contractAddress: string,
+}) => {
+  const { contract: stakingContract } = useContract(
+    contractAddress,
+    Staking__factory
+  );
 
-Calculates the real cost of your library using [size-limit](https://github.com/ai/size-limit) with `npm run size` and visulize it with `npm run analyze`.
+  const [waiting, setWaiting] = useState(false);
+  const handleConfirmation = async () => {
+    toast.success('Plasma Claimed');
+    setWaiting(false);
+  };
 
-#### Setup Files
+  const handleTransactionWait = async () => {
+    toast.success('Waiting for transaction to finish');
+  };
 
-This is the folder structure we set up for you:
+  const handleError = (error: any) => {
+    toast.error(error?.data?.message || error.message);
+  };
 
-```txt
-/example
-  index.html
-  index.tsx       # test your component here in a demo app
-  package.json
-  tsconfig.json
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
+  const [harvestPlasma] = useWriteContract(stakingContract, 'withdrawReward', {
+    onConfirmation: handleConfirmation,
+    onError: handleError,
+    onResponse: handleTransactionWait,
+  });
+  const { response: totalLpTokensLockedInThisContract } = useReadContract(
+    stakingContract,
+    'totalLpTokensLocked',
+    {
+      autoUpdate: true,
+    }
+  );
+
+  const claimPlasma = async () => {
+    // DO VALIDATIONS HERE
+    // lockAmount cannot be empty
+
+    try {
+      setWaiting(true);
+      await harvestPlasma();
+    } catch (error) {
+      console.log(error);
+      toast.error('Something went wrong');
+    } finally {
+      setWaiting(false);
+    }
+  };
+
+  const [ufoPrice] = useCGPrice({ tokenId: 'ufo-gaming' });
+
+  return (
+    <BrandedBox flex="1" px="8" py="6">
+      <VStack spacing="-5">
+        <Box align="center">
+          <VStack>
+            <OutlineButton
+              isLoading={waiting}
+              loadingText="Claiming"
+              disabled={waiting}
+              onClick={() => claimPlasma()}
+              small
+              text="Claim Plasma"
+            />
+          </VStack>
+        </Box>
+
+        <Stack w="full" spacing="-8">
+          <Table variant="brand">
+            <Thead>
+              <Tr>
+                <Th>TOTAL POOL (WEIGHTED)</Th>
+                <Th width="45%">TOTAL PLASMA</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td>
+                  <Text d="inline" variant="body2">
+                    {formatToken(totalLpTokensLockedInThisContract)} UFO
+                  </Text>
+                  <Text variant="caption">
+                    USD{' '}
+                    {formatToUSD(
+                      ufoPrice,
+                      totalLpTokensLockedInThisContract ?? undefined
+                    )}
+                  </Text>
+                </Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </Stack>
+      </VStack>
+    </BrandedBox>
+  );
+};
 ```
 
-#### React Testing Library
+There is a lot going on in the example above let's break it down.
 
-We do not set up `react-testing-library` for you yet, we welcome contributions and documentation on this.
+`useContract` is a hook that allows you to get the Contract object from the contract which is used by useReadContract and useWriteContract. It can also use the static RPC provider if the wallet is not connected if you set `useStaticProvider: true` in options.
 
-### Rollup
+useContract needs the contract address and the Contract Factory from typechain. Make sure you copy the generated types from hardhat and paste it in the frontend project directory. In my case I have it in the `src/types/typechain` folder.
 
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
+You can also use a ContractInterface ABI, however you wouldnt get any autocompletion so I do not recommend using this.
 
-### TypeScript
+`useReadContract` allows you to access public view functions or variables of the contract. Check your useReadContract.tsx for more implementation details.
 
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
+useReadContract needs the contract object from useContract, the name of the function and options (where you can specify if you'd like to auto update the value or not)(.
 
-## Continuous Integration
+The AUTO_UPDATE_BALANCE_INTERVAL constant is used to set the interval for auto updating the value.
 
-### GitHub Actions
+In case you would like to update the value manually (on button click) you can use the mutate function returned in the hook.
 
-Two actions are added by default:
+```jsx
+const { mutate, response } = useReadContract(contract, 'functionName');
 
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
+const handleClick = () => {
+  // Do stuff Here
 
-## Optimizations
+  mutate();
+};
+```
 
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
+`useWriteContract` allows you to access public write functions of the contract. Check your useWriteContract.tsx for more implementation details.
 
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
+useWriteContract needs the contract object from useContract, the name of the function, the options where you can specify how to handle the error if it occurs, handle the transaction wait and handle the confirmation on chain.
+It returns a mutate method which you can call on a button click.
 
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
+As you can see in my example, there is a claim plasma button which calls the harvestPlasma method, before calling it, you can do any frontend validations, set loaders etc.
+If your mutation method requires arguments, you can pass them when calling the method. You can also send ether by giving override options.
+
+### Get Price from Coingecko
+
+`useCGPrice` allows you to get the price of the token. By default it will get the USD value, however you can provider vsCurrency along with tokenId to get the price of the token in that currency. check out useCGPrice.tsx for more implementation details.
+
+### ENS Resolution
+
+`useENS` allows you to get the address of the ENS name of ens from address along with avatar and methods to query address and ens.
+
+```jsx
+// Signature
+const useENS = ({
+  ens,
+  address,
+}: {
+  ens?: string;
+  address?: string;
+}): {
+  ens?: string;
+  address?: string;
+  resolver?: Resolver;
+  avatar?: string;
+  getAddress: (ens: string) => Promise<string>;
+  getEns: (address: string) => Promise<string>;
+  loading: boolean;
 }
+
+// Usage - When Address is present
+const { ens, avatar, loading } = useENS({ address: bid?.bidder.id ?? '' });
+
+// Usage - When ENS is presnet
+const { ens, avatar, loading } = useENS({ ens: bid?.bidder.ens ?? '' });
+
+// Usage - When you want to fetch address / ens on event
+const {getEns, getAddress} = useENS();
+
+// get ens when address is present
+const ens = await getEns(address)
+// get address if ens is present
+const address = await getAddress(ens)
+
+// Usage - when you want to get a text record
+const {resolver} = useENS({ens}) // can be address also
+const avatar = await resolver.getText('avatar')
+const gitub = await resolver.getText('com.github')
+
 ```
 
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
+### Token Balance
 
-## Module Formats
+Getting token balance is one of the most common scenarios.
 
-CJS, ESModules, and UMD module formats are supported.
+Example
 
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
+```jsx
+  const { contract: ufoContract } = useContract(
+    UFO_TOKEN_CONTRACT_ADDRESS,
+    XToken__factory
+  )
 
-## Deploying the Example Playground
+  const ufoBalance = useTokenBalance(ufoContract as XToken)
 
-The Playground is just a simple [Parcel](https://parceljs.org) app, you can deploy it anywhere you would normally deploy that. Here are some guidelines for **manually** deploying with the Netlify CLI (`npm i -g netlify-cli`):
-
-```bash
-cd example # if not already in the example folder
-npm run build # builds to dist
-netlify deploy # deploy the dist folder
 ```
 
-Alternatively, if you already have a git repo connected, you can set up continuous deployment with Netlify:
+`useTokenBalance` is a hook that allows you to get the balance of a token. It auto updates the balance every AUTO_UPDATE_BALANCE_INTERVAL seconds.
 
-```bash
-netlify init
-# build command: yarn build && cd example && yarn && yarn build
-# directory to deploy: example/dist
-# pick yes for netlify.toml
-```
+You need to give it the contract object from useContract, and optionally you can also mention the token address. By default it will get the balance of the connected wallet.
 
-## Named Exports
+### Helpers
 
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
+Since these are very commonly used, I also created these functions so that you dont have to write them
 
-## Including Styles
+formatAddress - formats the wallet address to be displayed in the UI
 
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
+formatNumber - formats a number to locale string
 
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
+formatToUSD - given a usd price and the number of tokens, it will return the formatted usd value of the token.
 
-## Publishing to NPM
+formatToken - given a bignumber token (in wei) it will convert the number to string and also print the token value in ethers.
 
-We recommend using [np](https://github.com/sindresorhus/np).
+parseTxErrorMessage - parses the error messages from the transaction and returns a readable message.
 
-## Usage with Lerna
-
-When creating a new package with TSDX within a project set up with Lerna, you might encounter a `Cannot resolve dependency` error when trying to run the `example` project. To fix that you will need to make changes to the `package.json` file _inside the `example` directory_.
-
-The problem is that due to the nature of how dependencies are installed in Lerna projects, the aliases in the example project's `package.json` might not point to the right place, as those dependencies might have been installed in the root of your Lerna project.
-
-Change the `alias` to point to where those packages are actually installed. This depends on the directory structure of your Lerna project, so the actual path might be different from the diff below.
-
-```diff
-   "alias": {
--    "react": "../node_modules/react",
--    "react-dom": "../node_modules/react-dom"
-+    "react": "../../../node_modules/react",
-+    "react-dom": "../../../node_modules/react-dom"
-   },
-```
-
-An alternative to fixing this problem would be to remove aliases altogether and define the dependencies referenced as aliases as dev dependencies instead. [However, that might cause other problems.](https://github.com/palmerhq/tsdx/issues/64)
+Other methods can be found in the helpers.ts file.
