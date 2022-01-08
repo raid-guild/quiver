@@ -1,7 +1,7 @@
 const path = require('path');
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-const pkg = require('../package.json');
+const pkg = require('../quiver/package.json');
 
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
@@ -22,7 +22,7 @@ const pkg = require('../package.json');
     [
       'docusaurus-plugin-typedoc-api',
       {
-        projectRoot: path.join(__dirname, '..'),
+        projectRoot: path.join(__dirname, '..', 'quiver'),
         packages: ['.'],
       },
     ],
