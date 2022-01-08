@@ -1,82 +1,13 @@
 {
-  "version": "0.2.0",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "engines": {
-    "node": ">=10"
-  },
-  "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
-    "size": "size-limit",
-    "analyze": "size-limit --why",
-    "changeset": "changeset",
-    "changeset:release": "changeset publish",
-    "changeset:version": "changeset version && yarn install --lockfile-only"
-  },
-  "peerDependencies": {
-    "ethers": "^5.5.3",
-    "react": ">=16",
-    "react-hot-toast": "^2.2.0",
-    "web3modal": "^1.9.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
   "name": "@raidguild/quiver",
-  "author": "Raid Guild",
-  "module": "dist/quiver.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/quiver.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/quiver.esm.js",
-      "limit": "10 KB"
-    }
-  ],
+  "version": "0.2.0",
+  "private": false,
+  "scripts": {
+    "build": "pnpm run --recursive build",
+    "release": "pnpm run --filter quiver build && changeset publish"
+  },
   "devDependencies": {
-    "@changesets/cli": "^2.19.0",
-    "@size-limit/preset-small-lib": "^7.0.5",
-    "@types/lodash": "^4.14.178",
-    "@types/react": "^17.0.38",
-    "@types/react-dom": "^17.0.11",
-    "ethers": "^5.5.3",
-    "husky": "^7.0.4",
-    "react": ">=16",
-    "react-dom": "^17.0.2",
-    "react-hot-toast": "^2.2.0",
-    "size-limit": "^7.0.5",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.3.1",
-    "typescript": "^4.5.4",
-    "web3modal": "^1.9.4"
-  },
-  "dependencies": {
-    "lodash": "^4.17.21",
-    "lodash-es": "^4.17.21"
-  },
-  "contributors": [
-    "midgerate"
-  ],
-  "publishConfig": {
-    "access": "public"
+    "@changesets/cli": "^2.17.0",
+    "typescript": "^4.4.4"
   }
 }

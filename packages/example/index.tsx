@@ -11,7 +11,7 @@ import {
   useTokenBalance,
   useContract,
   ERC20_ABI,
-} from '../src';
+} from '@raidguild/quiver';
 const networks: NetworkConfig = {
   1: {
     chainId: 1,
