@@ -17,7 +17,10 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "changeset": "changeset",
+    "changeset:release": "changeset publish",
+    "changeset:version": "changeset version && yarn install --lockfile-only"
   },
   "peerDependencies": {
     "ethers": "^5.5.3",
@@ -50,6 +53,7 @@
     }
   ],
   "devDependencies": {
+    "@changesets/cli": "^2.19.0",
     "@size-limit/preset-small-lib": "^7.0.5",
     "@types/lodash": "^4.14.178",
     "@types/react": "^17.0.38",
