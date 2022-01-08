@@ -78,8 +78,6 @@ export const WalletProvider: React.FC<{
     }
   }, [typeof window]);
 
-  console.log({ web3modalOptions, networks, defaultNetwork, web3Modal });
-
   const isConnected: boolean = useMemo(
     () => !!provider && !!address && !!chainId,
     [provider, address, chainId]
