@@ -2,7 +2,10 @@ import { Contract, ContractInterface } from '@ethersproject/contracts';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { useWallet } from '../WalletContext';
 import { ContractFactory, ContractInstance } from './types';
-
+/**
+ * Returns an ethers contract instance which can be used with other hooks as well as directly calling functions on the contract.
+ * @category Hooks
+ */
 export const useContract = <TContract extends ContractInstance = any>(
   address: string,
   typechainFactoryOrABI: ContractFactory<TContract> | ContractInterface,

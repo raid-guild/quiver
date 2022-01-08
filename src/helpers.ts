@@ -1,9 +1,17 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { formatUnits } from '@ethersproject/units';
 
+/**
+ * Converts an ipfs:// link to an HTTP IPFS url https://ipfs.io/ipfs/<hash>
+ * @category Helpers
+ */
 export const parseTokenURI = (text: string) =>
   text.replace('ipfs://', 'https://ipfs.io/ipfs/');
 
+/**
+ * Given an address, format and truncate the address from middle.
+ * @category Helpers
+ */
 export const formatAddress = (
   address: string | null | undefined,
   ensName?: string | null,
@@ -17,6 +25,10 @@ export const formatAddress = (
   else return '';
 };
 
+/**
+ * Converts a number to the localaized string representation.
+ * @category Helpers
+ */
 export const formatNumber = (number: number): string => {
   return number.toLocaleString(undefined, {
     minimumFractionDigits: 0,
@@ -24,11 +36,19 @@ export const formatNumber = (number: number): string => {
   });
 };
 
+/**
+ * Returns a localized string representation of a BigNumber multiplied by a currency unit
+ * @category Helpers
+ */
 export const formatToUSD = (usdPrice: number, number?: BigNumber) => {
   const usdValue = usdPrice * Number(formatToken(number));
   return formatNumber(usdValue);
 };
 
+/**
+ * Formats a Bignumber to a string and displays 6 decimal places.
+ * @category Helpers
+ */
 export const formatToken = (
   number?: BigNumber | string,
   decimals: string | number = 18
@@ -45,6 +65,10 @@ export const formatToken = (
   return formatted;
 };
 
+/**
+ * Parses the errors returned from RPC calls and returns the error message string. Useful to display it in toast messages.
+ * @category Helpers
+ */
 export const parseTxErrorMessage = (error: any) => {
   if (error?.error?.message && error.error.message.includes('reverted')) {
     return error.error.message.split('reverted:')[1];

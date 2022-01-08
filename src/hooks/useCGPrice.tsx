@@ -1,5 +1,10 @@
 import { get } from 'lodash';
 import { useEffect, useState } from 'react';
+
+/**
+ * Gets the currency value of a token from coin gecko
+ * @category Hooks
+ */
 export const useCGPrice = ({
   tokenId,
   vsCurrency = 'usd',

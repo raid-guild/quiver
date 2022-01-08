@@ -12,6 +12,7 @@ import { useWallet } from '../WalletContext';
  * @param contract The smart contract for the token. Should be an ERC20 or ERC721 contract.
  * @param address The address. Defaults to the address of the connected wallet.
  * @param autoUpdateInterval The interval in milliseconds to automatically update the balance.
+ * @category Hooks
  */
 export function useTokenBalance(
   contract: Contract | null,

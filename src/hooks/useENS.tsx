@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useWallet } from '../WalletContext';
 import { JsonRpcProvider, Resolver } from '@ethersproject/providers';
-
+/**
+ * Useful hook to work with ENS names.
+ * @category Hooks
+ */
 export const useENS = ({
   ens,
   address,

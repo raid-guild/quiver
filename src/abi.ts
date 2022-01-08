@@ -1,5 +1,6 @@
 /**
  * A minimal ABI definition for an ERC20 token.
+ * @category Common ABIs
  */
 export const ERC20_ABI = Object.freeze([
   'function totalSupply() view returns (uint256)',
@@ -14,6 +15,7 @@ export const ERC20_ABI = Object.freeze([
 
 /**
  * An ABI definition for ERC165.
+ * @category Common ABIs
  */
 export const ERC165_ABI = Object.freeze([
   'function supportsInterface(bytes4 interfaceId) view returns (bool)',
@@ -21,6 +23,7 @@ export const ERC165_ABI = Object.freeze([
 
 /**
  * A minimal ABI definition for an ERC721 (non-fungible) token.
+ * @category Common ABIs
  */
 export const ERC721_BASE_ABI = Object.freeze([
   ...ERC165_ABI,
@@ -38,6 +41,9 @@ export const ERC721_BASE_ABI = Object.freeze([
   'function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data)',
 ]);
 
+/**
+ * @category Common ABIs
+ */
 export const ERC721_METADATA_ABI = Object.freeze([
   'function name() view returns (string memory)',
   'function symbol() view returns (string memory)',
@@ -46,6 +52,7 @@ export const ERC721_METADATA_ABI = Object.freeze([
 
 /**
  * An ABI definition for enumerability of ERC721 tokens.
+ * @category Common ABIs
  */
 export const ERC721_ENUMERABLE_ABI = Object.freeze([
   'function totalSupply() view returns (uint256)',
@@ -56,6 +63,7 @@ export const ERC721_ENUMERABLE_ABI = Object.freeze([
 /**
  * An ABI definition for an ERC721 (non-fungible) token.
  * This ABI includes common extensions for metadata, and enumerability.
+ * @category Common ABIs
  */
 export const ERC721_ABI = Object.freeze([
   ...ERC721_BASE_ABI,

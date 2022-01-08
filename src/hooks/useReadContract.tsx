@@ -2,7 +2,10 @@ import { Contract } from '@ethersproject/contracts';
 import { useEffect, useState } from 'react';
 
 import { Awaited, ContractFunctions, ContractInstance } from './types';
-
+/**
+ * Read from contract
+ * @category Hooks
+ */
 export const useReadContract = <
   TContract extends ContractInstance = any,
   TFunctionName extends string & keyof ContractFunctions<TContract> = string

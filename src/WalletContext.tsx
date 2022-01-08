@@ -12,7 +12,7 @@ import Web3Modal, { ICoreOptions } from 'web3modal';
 
 import { switchChainOnMetaMask } from './metamask';
 
-export type WalletContextType = {
+type WalletContextType = {
   provider: providers.Web3Provider | null | undefined;
   chainId: number | null | undefined;
   address: string | null | undefined;
@@ -25,7 +25,7 @@ export type WalletContextType = {
   defaultNetwork: number;
 };
 
-export const WalletContext = createContext<WalletContextType>({
+const WalletContext = createContext<WalletContextType>({
   provider: null,
   chainId: null,
   address: null,
@@ -58,6 +58,9 @@ const isMetamaskProvider = (
   provider: providers.Web3Provider | null | undefined
 ) => provider?.connection?.url === 'metamask';
 
+/**
+ * @category Providers
+ */
 export const WalletProvider: React.FC<{
   web3modalOptions: Partial<ICoreOptions>;
   networks: NetworkConfig;
@@ -182,4 +185,8 @@ export const WalletProvider: React.FC<{
   );
 };
 
+/**
+ * Gets the wallet context from the wallet provider
+ * @category Hooks
+ */
 export const useWallet = (): WalletContextType => useContext(WalletContext);

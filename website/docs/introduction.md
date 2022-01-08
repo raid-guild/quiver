@@ -1,4 +1,9 @@
-# Quiver
+---
+sidebar_position: 1
+slug: /
+---
+
+# Introduction
 
 A collection of React hooks and components, making it easy to develop frontends for Ethereum dApps, especially for first time web3 frontend developers. Quiver Aims to decrease the time it takes to integrate from 15 hours to 2 hours.
 
