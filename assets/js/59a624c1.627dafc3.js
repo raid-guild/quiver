@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[331],{2927:function(e){e.exports=JSON.parse('{"id":100,"name":"useCGPrice","nextId":89,"permalink":"/quiver/api/quiver/function/useCGPrice","previousId":37}')}}]);

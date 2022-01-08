@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[743],{9119:function(e){e.exports=JSON.parse('{"id":18,"name":"parseTokenURI","nextId":37,"permalink":"/quiver/api/quiver/function/parseTokenURI","previousId":33}')}}]);
