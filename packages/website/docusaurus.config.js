@@ -10,7 +10,7 @@ const pkg = require('../quiver/package.json');
   tagline:
     'A collection of React hooks and components, making it easy to develop frontends for Ethereum dApps.',
   url: 'https://raid-guild.github.io/',
-  baseUrl: '/',
+  baseUrl: '/quiver/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
