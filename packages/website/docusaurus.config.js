@@ -14,7 +14,7 @@ const pkg = require('../quiver/package.json');
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'raidguild',
+  organizationName: 'raid-guild',
   projectName: 'quiver',
   trailingSlash: true,
 
