@@ -35,7 +35,6 @@ jobs:
 
       - name: Deploy to GitHub Pages
         env:
-          USE_SSH: true
           GIT_USER: midgerate
           GIT_PASS: ${{ secrets.GH_PAT }}
         run: |
