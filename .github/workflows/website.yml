@@ -19,13 +19,12 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       
-      - name: Install deps and build (with cache)
-        working-directory: website
-        uses: bahmutov/npm-install@v1
-      
       - name: Build website
         working-directory: website
-        run: yarn build
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+      
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
