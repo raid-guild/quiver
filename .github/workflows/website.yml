@@ -1,0 +1,40 @@
+name: Website
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docs:
+    name: Docs
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run: 
+        working-directory: ./example
+    strategy:
+      matrix:
+        node: ['14.x']
+        os: [ubuntu-latest]
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      
+      - name: 
+
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
+      
+      - name: Build
+        run: yarn build
+
+      - name: Update GH Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
