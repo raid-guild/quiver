@@ -14,7 +14,7 @@ const pkg = require('../package.json');
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'Raid Guild',
+  organizationName: 'raidguild',
   projectName: 'quiver',
   trailingSlash: true,
 

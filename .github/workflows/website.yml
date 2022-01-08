@@ -9,30 +9,26 @@ jobs:
   docs:
     name: Docs
     runs-on: ${{ matrix.os }}
-    defaults:
-      run: 
-        working-directory: ./example
     strategy:
       matrix:
         node: ['14.x']
         os: [ubuntu-latest]
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@master
-
-      - name: Use Node ${{ matrix.node }}
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
+          cache: yarn
       
-      - name: Install deps and build (with cache)
-        uses: bahmutov/npm-install@v1
+      - name: Build website
+        working-directory: website
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
       
-      - name: Build
-        run: yarn build
 
-      - name: Update GH Pages
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./website/build
