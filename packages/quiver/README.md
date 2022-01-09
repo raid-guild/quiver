@@ -24,7 +24,6 @@ Quiver comes with many useful features that are otherwise configured by develope
 
 - ethers
 - react >= 16
-- react-hot-toast
 - web3modal
 
 Docs can be found at https://raid-guild.github.io/quiver/

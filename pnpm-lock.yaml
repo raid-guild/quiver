@@ -19,15 +19,13 @@ importers:
       next: 12.0.7
       react: 17.0.2
       react-dom: 17.0.2
-      react-hot-toast: ^2.2.0
       web3modal: ^1.9.4
     dependencies:
-      '@raidguild/quiver': link:../quiver
+      '@raidguild/quiver': link:../..
       ethers: 5.5.3
       next: 12.0.7_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-hot-toast: 2.2.0_react-dom@17.0.2+react@17.0.2
       web3modal: 1.9.5
     devDependencies:
       eslint: 8.6.0
@@ -58,7 +56,6 @@ importers:
       prettier: ^2.5.1
       react: '>=16'
       react-dom: ^17.0.2
-      react-hot-toast: ^2.2.0
       typescript: ^4.5.4
       web3modal: ^1.9.4
     dependencies:
@@ -74,7 +71,6 @@ importers:
       lodash-es: 4.17.21
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-hot-toast: 2.2.0_react-dom@17.0.2+react@17.0.2
       web3modal: 1.9.5
     devDependencies:
       '@changesets/cli': 2.19.0
@@ -7115,12 +7111,6 @@ packages:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
     dev: true
 
-  /goober/2.1.1:
-    resolution: {integrity: sha512-TkGCqHxE4g5DtdpwxFCi53bXRtvw0BoSgCihVSIOioe9kfkqin5wXG8BQKykN0tjzmxZJ81qU2KWinZf5qKVlw==}
-    peerDependencies:
-      csstype: ^2.6.2
-    dev: false
-
   /got/9.6.0:
     resolution: {integrity: sha512-R7eWptXuGYxwijs0eV+v3o6+XH1IqVK8dJOEecQfTmkncw9AV4dcw/Dhxi8MdlqPthxxpZyizMzyg8RTmEsG+Q==}
     engines: {node: '>=8.6'}
@@ -10123,20 +10113,6 @@ packages:
       react: 17.0.2
       react-fast-compare: 3.2.0
       react-side-effect: 2.1.1_react@17.0.2
-    dev: false
-
-  /react-hot-toast/2.2.0_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-248rXw13uhf/6TNDVzagX+y7R8J183rp7MwUMNkcrBRyHj/jWOggfXTGlM8zAOuh701WyVW+eUaWG2LeSufX9g==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: '>=16'
-      react-dom: '>=16'
-    dependencies:
-      goober: 2.1.1
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-    transitivePeerDependencies:
-      - csstype
     dev: false
 
   /react-is/16.13.1:

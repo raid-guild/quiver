@@ -7,9 +7,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { toast } from 'react-hot-toast';
-import Core from 'web3modal';
-import Web3Modal, { ICoreOptions } from 'web3modal';
+import { ICoreOptions } from 'web3modal';
 
 import { switchChainOnMetaMask } from './metamask';
 
@@ -66,7 +64,17 @@ export const WalletProvider: React.FC<{
   web3modalOptions: Partial<ICoreOptions>;
   networks: NetworkConfig;
   defaultNetwork: number;
-}> = ({ children, web3modalOptions, networks, defaultNetwork }) => {
+  handleModalEvents?: (
+    eventName: 'error' | 'accountsChanged' | 'chainChanged',
+    error?: { code: string; message: string }
+  ) => void;
+}> = ({
+  children,
+  web3modalOptions,
+  networks,
+  defaultNetwork,
+  handleModalEvents,
+}) => {
   const [{ provider, chainId, address }, setWalletState] =
     useState<WalletStateType>({});
 
@@ -101,9 +109,11 @@ export const WalletProvider: React.FC<{
           networks[defaultNetwork].chainId
         ));
       if (!success) {
-        const errorMsg = `Network not supported, please switch to ${networks[defaultNetwork].name}`;
-        toast.error(errorMsg);
-        throw new Error(errorMsg);
+        handleModalEvents &&
+          handleModalEvents('error', {
+            code: 'UNSUPPORTED_NETWORK',
+            message: `Network not supported, please switch to ${networks[defaultNetwork].name}`,
+          });
       }
       network = networks[defaultNetwork].chainId;
     }
@@ -129,13 +139,17 @@ export const WalletProvider: React.FC<{
       if (!_isGnosisSafe) {
         modalProvider.on('accountsChanged', () => {
           disconnect();
+          handleModalEvents && handleModalEvents('accountsChanged');
         });
         modalProvider.on('chainChanged', () => {
+          handleModalEvents && handleModalEvents('chainChanged');
           if (!networks[Number(modalProvider.chainId)]) {
-            console.log(
-              'You have switched to an unsupported chain, Disconnecting from Metamask...'
-            );
             disconnect();
+            handleModalEvents &&
+              handleModalEvents('error', {
+                code: 'UNSUPPORTED_NETWORK',
+                message: `You have switched to an unsupported chain, Disconnecting from Metamask...`,
+              });
           }
         });
       }

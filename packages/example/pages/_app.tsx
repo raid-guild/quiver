@@ -47,6 +47,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         web3modalOptions={web3modalOptions}
         networks={networks}
         defaultNetwork={1}
+        handleModalEvents={(eventName, error) => {
+          if (error) {
+            console.error(error.message);
+          }
+  
+          console.log(eventName);
+        }}
       >
           <Component {...pageProps} />
     </WalletProvider>
