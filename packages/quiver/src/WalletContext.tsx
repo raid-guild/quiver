@@ -1,3 +1,4 @@
+import { SafeAppWeb3Modal } from '@gnosis.pm/safe-apps-web3modal';
 import { providers } from 'ethers';
 import React, {
   createContext,
@@ -66,17 +67,8 @@ export const WalletProvider: React.FC<{
   networks: NetworkConfig;
   defaultNetwork: number;
 }> = ({ children, web3modalOptions, networks, defaultNetwork }) => {
-  const [{ provider, chainId, address }, setWalletState] = useState<
-    WalletStateType
-  >({});
-
-  const [web3Modal, setWeb3Modal] = useState<Core>();
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setWeb3Modal(new Web3Modal(web3modalOptions));
-    }
-  }, [typeof window]);
+  const [{ provider, chainId, address }, setWalletState] =
+    useState<WalletStateType>({});
 
   const isConnected: boolean = useMemo(
     () => !!provider && !!address && !!chainId,
@@ -86,8 +78,14 @@ export const WalletProvider: React.FC<{
   const [isConnecting, setConnecting] = useState<boolean>(true);
   const isMetamask = useMemo(() => isMetamaskProvider(provider), [provider]);
 
+  const getModal = () => {
+    const modal = new SafeAppWeb3Modal(web3modalOptions);
+    return modal;
+  };
+
   const disconnect = async () => {
-    web3Modal?.clearCachedProvider();
+    const modal = getModal();
+    modal.clearCachedProvider();
     setWalletState({});
   };
 
@@ -121,22 +119,26 @@ export const WalletProvider: React.FC<{
   const connectWallet = async () => {
     try {
       setConnecting(true);
-
-      const modalProvider = await web3Modal?.connect();
+      const modal = getModal();
+      const modalProvider = await modal.requestProvider();
 
       await setWalletProvider(modalProvider);
 
-      modalProvider.on('accountsChanged', () => {
-        disconnect();
-      });
-      modalProvider.on('chainChanged', () => {
-        if (!networks[Number(modalProvider.chainId)]) {
-          console.log(
-            'You have switched to an unsupported chain, Disconnecting from Metamask...'
-          );
+      const _isGnosisSafe = await modal.isSafeApp();
+
+      if (!_isGnosisSafe) {
+        modalProvider.on('accountsChanged', () => {
           disconnect();
-        }
-      });
+        });
+        modalProvider.on('chainChanged', () => {
+          if (!networks[Number(modalProvider.chainId)]) {
+            console.log(
+              'You have switched to an unsupported chain, Disconnecting from Metamask...'
+            );
+            disconnect();
+          }
+        });
+      }
     } catch (web3Error) {
       // eslint-disable-next-line no-console
       console.error(web3Error);
@@ -154,7 +156,13 @@ export const WalletProvider: React.FC<{
        */
       const isMetamaskUnlocked =
         (await window.ethereum?._metamask?.isUnlocked()) ?? false;
-      if (isMetamaskUnlocked && web3Modal?.cachedProvider) {
+      const modal = getModal();
+      const _isGnosisSafe = await modal.isSafeApp();
+
+      if (
+        isMetamaskUnlocked &&
+        (_isGnosisSafe || web3modalOptions.cacheProvider)
+      ) {
         await connectWallet();
       } else {
         setConnecting(false);
