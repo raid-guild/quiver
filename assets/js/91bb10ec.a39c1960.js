@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[467],{1214:function(e){e.exports=JSON.parse('{"id":40,"name":"formatToken","nextId":25,"permalink":"/quiver/api/quiver/function/formatToken","previousId":36}')}}]);

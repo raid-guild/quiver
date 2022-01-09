@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[153],{987:function(e){e.exports=JSON.parse('{"id":29,"name":"formatToUSD","nextId":33,"permalink":"/quiver/api/quiver/function/formatToUSD","previousId":26}')}}]);
