@@ -9,25 +9,25 @@ import { ICoreOptions, IProviderOptions } from 'web3modal';
 function MyApp({ Component, pageProps }: AppProps) {
 
   const networks: NetworkConfig = {
-    1: {
-      chainId: 1,
+    '0x1': {
+      chainId: '0x1',
       name: 'Mainnet',
       symbol: 'ETH',
-      explorer: 'https://etherscan.io/',
+      explorer: 'https://etherscan.io',
       rpc: 'https://mainnet.infura.io/v3/e039ebf983d0477ca69a543b1c62101a', // replace with your infura rpc id
     },
-    4: {
-      chainId: 4,
+    "0x4": {
+      chainId: "0x4",
       name: 'Rinkeby',
       symbol: 'ETH',
-      explorer: 'https://rinkeby.etherscan.io/',
+      explorer: 'https://rinkeby.etherscan.io',
       rpc: 'https://rinkeby.infura.io/v3/e039ebf983d0477ca69a543b1c62101a', // replace with your infura rpc id
     },
-    1337: {
-      chainId: 1337,
+    "0x539": {
+      chainId: '0x539',
       name: 'Hardhat',
       symbol: 'ETH',
-      explorer: 'http://localhost:1234/',
+      explorer: 'http://localhost:1234',
       rpc: 'http://localhost:8545',
     },
   };
@@ -46,7 +46,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WalletProvider
         web3modalOptions={web3modalOptions}
         networks={networks}
-        defaultNetwork={1}
+        defaultChainId={'0x1'}
         handleModalEvents={(eventName, error) => {
           if (error) {
             console.error(error.message);

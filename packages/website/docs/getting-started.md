@@ -22,25 +22,25 @@ import { IProviderOptions } from "web3modal";
 import { Toaster } from "react-hot-toast";
 
 const SUPPORTED_NETWORKS: NetworkConfig = {
-  1: {
-    chainId: 1,
+  "0x1": {
+    chainId: "0x1",
     name: "Mainnet",
     symbol: "ETH",
-    explorer: "https://etherscan.io/tx/",
+    explorer: "https://etherscan.io",
     rpc: "https://mainnet.infura.io/v3/<your infura project id>",
   },
-  4: {
-    chainId: 4,
+  "0x4": {
+    chainId: "0x4",
     name: "Rinkeby",
     symbol: "ETH",
-    explorer: "https://rinkeby.etherscan.io/",
+    explorer: "https://rinkeby.etherscan.io",
     rpc: "https://rinkeby.infura.io/v3/<your infura project id>",
   },
-  1337: {
-    chainId: 1337,
+  "0x539": {
+    chainId: "0x539",
     name: "Hardhat",
     symbol: "ETH",
-    explorer: "http://localhost:1234/",
+    explorer: "http://localhost:1234",
     rpc: "http://localhost:8545",
   },
 };
@@ -50,9 +50,9 @@ const providerOptions: IProviderOptions = {
     package: WalletConnectProvider,
     options: {
       rpc: {
-        1: networks[1].rpc,
-        4: networks[4].rpc,
-        1337: networks[1337].rpc,
+        1: networks["0x1"].rpc,
+        4: networks["0x4"].rpc,
+        1337: networks["0x539"].rpc,
       },
     },
   },
@@ -65,7 +65,7 @@ const web3modalOptions = {
   theme: "dark",
 };
 
-const DEFAULT_NETWORK = 1; // Used to switch to if the user is on an unsupported network
+const DEFAULT_CHAIN_ID = "0x1"; // Used to switch to if the user is on an unsupported network
 
 const App = () => (
   <>
@@ -78,7 +78,7 @@ const App = () => (
     <WalletProvider
       web3modalOptions={web3modalOptions}
       networks={SUPPORTED_NETWORKS}
-      defaultNetwork={DEFAULT_NETWORK}
+      defaultChainId={DEFAULT_NETWORK}
       // Optional but useful to handle events.
       handleModalEvents={(eventName, error) => {
         if (error) {

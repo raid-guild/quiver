@@ -4,7 +4,7 @@ import { NetworkConfig } from './WalletContext';
 
 export const switchChainOnMetaMask = async (
   networks: NetworkConfig,
-  chainId: number
+  chainId: string
 ): Promise<boolean> => {
   if (!networks[chainId]) return false;
 

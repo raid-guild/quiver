@@ -21,7 +21,7 @@ type WalletContextType = {
   isConnected: boolean;
   isMetamask: boolean;
   networks: NetworkConfig;
-  defaultNetwork: number;
+  defaultChainId: string;
 };
 
 const WalletContext = createContext<WalletContextType>({
@@ -34,7 +34,7 @@ const WalletContext = createContext<WalletContextType>({
   isConnected: false,
   isMetamask: false,
   networks: {},
-  defaultNetwork: 0,
+  defaultChainId: '0x',
 });
 
 type WalletStateType = {
@@ -44,8 +44,8 @@ type WalletStateType = {
 };
 
 export type NetworkConfig = {
-  [chainId: number]: {
-    chainId: number;
+  [chainId: string]: {
+    chainId: string;
     name: string;
     symbol: string;
     explorer: string;
@@ -63,7 +63,7 @@ const isMetamaskProvider = (
 export const WalletProvider: React.FC<{
   web3modalOptions: Partial<ICoreOptions>;
   networks: NetworkConfig;
-  defaultNetwork: number;
+  defaultChainId: string;
   handleModalEvents?: (
     eventName: 'error' | 'accountsChanged' | 'chainChanged',
     error?: { code: string; message: string }
@@ -72,7 +72,7 @@ export const WalletProvider: React.FC<{
   children,
   web3modalOptions,
   networks,
-  defaultNetwork,
+  defaultChainId,
   handleModalEvents,
 }) => {
   const [{ provider, chainId, address }, setWalletState] =
@@ -100,28 +100,26 @@ export const WalletProvider: React.FC<{
   const setWalletProvider = async (provider: any) => {
     const ethersProvider = new providers.Web3Provider(provider);
 
-    let network = Number(provider.chainId);
-    if (!networks[network]) {
+    let chainId = provider.chainId;
+    if (!networks[chainId]) {
       const success =
         isMetamaskProvider(ethersProvider) &&
-        (await switchChainOnMetaMask(
-          networks,
-          networks[defaultNetwork].chainId
-        ));
+        (await switchChainOnMetaMask(networks, defaultChainId));
       if (!success) {
         handleModalEvents &&
           handleModalEvents('error', {
             code: 'UNSUPPORTED_NETWORK',
-            message: `Network not supported, please switch to ${networks[defaultNetwork].name}`,
+            message: `Network not supported, please switch to ${networks[defaultChainId].name}`,
           });
+        return;
       }
-      network = networks[defaultNetwork].chainId;
+      chainId = defaultChainId;
     }
 
     const signerAddress = await ethersProvider.getSigner().getAddress();
     setWalletState({
       provider: ethersProvider,
-      chainId: network,
+      chainId,
       address: signerAddress,
     });
   };
@@ -143,7 +141,7 @@ export const WalletProvider: React.FC<{
         });
         modalProvider.on('chainChanged', () => {
           handleModalEvents && handleModalEvents('chainChanged');
-          if (!networks[Number(modalProvider.chainId)]) {
+          if (!networks[modalProvider.chainId]) {
             disconnect();
             handleModalEvents &&
               handleModalEvents('error', {
@@ -197,7 +195,7 @@ export const WalletProvider: React.FC<{
         disconnect,
         isMetamask,
         networks,
-        defaultNetwork,
+        defaultChainId,
       }}
     >
       {children}

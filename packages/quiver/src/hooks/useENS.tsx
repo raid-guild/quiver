@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useWallet } from '../WalletContext';
 import { JsonRpcProvider, Resolver } from '@ethersproject/providers';
+import { useEffect, useState } from 'react';
+
+import { useWallet } from '../WalletContext';
 /**
  * Useful hook to work with ENS names.
  * @category Hooks
@@ -26,9 +27,9 @@ export const useENS = ({
   const [resolver, setResolver] = useState<Resolver>();
   const [loading, setLoading] = useState(false);
 
-  const { isConnected, provider, networks, defaultNetwork } = useWallet();
+  const { isConnected, provider, networks, defaultChainId } = useWallet();
   const localProvider = !isConnected
-    ? new JsonRpcProvider(networks[defaultNetwork].rpc, defaultNetwork)
+    ? new JsonRpcProvider(networks[defaultChainId].rpc, defaultChainId)
     : provider;
 
   const populateENS = async () => {

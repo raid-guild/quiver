@@ -1,5 +1,6 @@
 import { Contract, ContractInterface } from '@ethersproject/contracts';
 import { JsonRpcProvider } from '@ethersproject/providers';
+
 import { useWallet } from '../WalletContext';
 import { ContractFactory, ContractInstance } from './types';
 /**
@@ -16,11 +17,16 @@ export const useContract = <TContract extends ContractInstance = any>(
   contract: TContract | Contract | null;
   error: Error | null;
 } => {
-  const { provider, isConnected, networks, defaultNetwork } = useWallet();
+  const { provider, isConnected, networks, defaultChainId } = useWallet();
+
+  console.log({ defaultChainId });
 
   const signerOrProvider =
     options?.useStaticProvider && !isConnected
-      ? new JsonRpcProvider(networks[defaultNetwork].rpc, defaultNetwork)
+      ? new JsonRpcProvider(
+          networks[defaultChainId].rpc,
+          Number(defaultChainId)
+        )
       : provider?.getSigner();
 
   if (signerOrProvider) {
