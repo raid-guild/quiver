@@ -15,7 +15,7 @@ yarn add @raidguild/quiver ethers web3modal
 2. Wrap your app with WalletProvider
 
 ```jsx
-import { WalletProvider, NetworkConfig } from "@raid-guild/quiver";
+import { WalletProvider, NetworkConfig } from "@raidguild/quiver";
 // If using wallet connect
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { IProviderOptions } from "web3modal";
