@@ -3,16 +3,11 @@
 Quiver exposes useful variables to connect to a wallet. Here is an example.
 
 ```jsx
-import { useWallet } from '@raid-guild/quiver';
+import { useWallet } from "@raidguild/quiver";
 
 const ConnectWallet: React.FC = () => {
-  const {
-    connectWallet,
-    isConnecting,
-    isConnected,
-    disconnect,
-    address,
-  } = useWallet();
+  const { connectWallet, isConnecting, isConnected, disconnect, address } =
+    useWallet();
   return (
     <>
       {!isConnected && (
@@ -21,15 +16,15 @@ const ConnectWallet: React.FC = () => {
           onClick={() => !isConnected && connectWallet()}
         >
           {isConnecting
-            ? 'Connecting...'
+            ? "Connecting..."
             : isConnected
-            ? 'Connected'
-            : 'Connect Wallet'}
+            ? "Connected"
+            : "Connect Wallet"}
         </button>
       )}
       {isConnected && (
         <>
-          <h4 style={{ display: 'inline' }}>{formatAddress(address)}</h4>
+          <h4 style={{ display: "inline" }}>{formatAddress(address)}</h4>
           <button onClick={() => disconnect()}>Disconnect</button>
         </>
       )}
