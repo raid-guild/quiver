@@ -97,10 +97,16 @@ export const WalletProvider: React.FC<{
     setWalletState({});
   };
 
+  const numberToHex = (number: number) => {
+    return `0x${number.toString(16)}`;
+  };
+
   const setWalletProvider = async (provider: any) => {
     const ethersProvider = new providers.Web3Provider(provider);
-
-    let chainId = provider.chainId;
+    let chainId =
+      typeof provider.chainId === 'number'
+        ? numberToHex(provider.chainId)
+        : provider.chainId;
     if (!networks[chainId]) {
       const success =
         isMetamaskProvider(ethersProvider) &&
