@@ -13,7 +13,7 @@ import { switchChainOnMetaMask } from './metamask';
 
 type WalletContextType = {
   provider: providers.Web3Provider | null | undefined;
-  chainId: number | null | undefined;
+  chainId: string | null | undefined;
   address: string | null | undefined;
   connectWallet: () => Promise<void>;
   disconnect: () => void;
@@ -39,7 +39,7 @@ const WalletContext = createContext<WalletContextType>({
 
 type WalletStateType = {
   provider?: providers.Web3Provider | null;
-  chainId?: number | null;
+  chainId?: string | null;
   address?: string | null;
 };
 
@@ -103,7 +103,7 @@ export const WalletProvider: React.FC<{
 
   const setWalletProvider = async (provider: any) => {
     const ethersProvider = new providers.Web3Provider(provider);
-    let chainId =
+    let chainId: string =
       typeof provider.chainId === 'number'
         ? numberToHex(provider.chainId)
         : provider.chainId;
