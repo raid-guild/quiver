@@ -16,6 +16,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       explorer: 'https://etherscan.io',
       rpc: 'https://mainnet.infura.io/v3/e039ebf983d0477ca69a543b1c62101a', // replace with your infura rpc id
     },
+    '0x64': {
+      chainId: '0x64',
+      name: 'Gnosis Chain',
+      symbol: 'xDAI',
+      explorer: "https://blockscout.com/xdai/mainnet",
+      rpc: "https://dai.poa.network"
+    },
     "0x4": {
       chainId: "0x4",
       name: 'Rinkeby',

@@ -1,4 +1,8 @@
-import { JsonRpcProvider, Resolver } from '@ethersproject/providers';
+import {
+  JsonRpcProvider,
+  Resolver,
+  getDefaultProvider,
+} from '@ethersproject/providers';
 import { useEffect, useState } from 'react';
 
 import { useWallet } from '../WalletContext';
@@ -27,10 +31,8 @@ export const useENS = ({
   const [resolver, setResolver] = useState<Resolver>();
   const [loading, setLoading] = useState(false);
 
-  const { isConnected, provider, networks, defaultChainId } = useWallet();
-  const localProvider = !isConnected
-    ? new JsonRpcProvider(networks[defaultChainId].rpc, defaultChainId)
-    : provider;
+  const { isConnected } = useWallet();
+  const localProvider = getDefaultProvider();
 
   const populateENS = async () => {
     if (!localProvider) return;

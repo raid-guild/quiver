@@ -1,5 +1,5 @@
 import {
-  ERC20_ABI, formatAddress, useContract, useTokenBalance, useWallet
+  ERC20_ABI, formatAddress, useContract, useENS, useTokenBalance, useWallet
 } from '@raidguild/quiver';
 
 const ConnectWallet: React.FC = () => {
@@ -71,6 +71,9 @@ const DAIBalance = () => {
 
 
 export default function Home() {
+
+  const { address } = useWallet();
+  const { ens } = useENS({address: address ?? undefined});
   return (
     <>
      <div>
@@ -86,6 +89,8 @@ export default function Home() {
         <div>
           <h1>More examples coming soon</h1>
         </div>
+
+        <div>Resolved ENS: {ens}</div>
         </>
   )
 }
