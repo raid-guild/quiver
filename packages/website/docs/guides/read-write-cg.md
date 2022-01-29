@@ -6,40 +6,40 @@ NOTE - Due to shortage of time, we havent been able to put new docs. This page c
 
 Example
 
-```jsx
-import { Box, Heading, Stack, Text, VStack } from '@chakra-ui/layout';
-import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/table';
-import { useState } from 'react';
-import toast from 'react-hot-toast';
+```tsx
+import { Box, Heading, Stack, Text, VStack } from "@chakra-ui/layout";
+import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/table";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
-import { BrandedBox, OutlineButton } from '@/components';
-import { Staking__factory } from '@/types/typechain';
-import { formatToken, formatToUSD } from '@/web3/helpers';
+import { BrandedBox, OutlineButton } from "@/components";
+import { Staking__factory, Staking } from "@/types/typechain";
+import { formatToken, formatToUSD } from "@/web3/helpers";
 import {
   useCGPrice,
-  useContract,
+  useTypedContract,
   useReadContract,
   useWriteContract,
-} from '@/web3/hooks';
+} from "@/web3/hooks";
 
 export const PoolSummary = ({
   contractAddress,
 }: {
-  contractAddress: string,
+  contractAddress: string;
 }) => {
-  const { contract: stakingContract } = useContract(
+  const { contract: stakingContract } = useTypedContract(
     contractAddress,
     Staking__factory
   );
 
   const [waiting, setWaiting] = useState(false);
   const handleConfirmation = async () => {
-    toast.success('Plasma Claimed');
+    toast.success("Plasma Claimed");
     setWaiting(false);
   };
 
   const handleTransactionWait = async () => {
-    toast.success('Waiting for transaction to finish');
+    toast.success("Waiting for transaction to finish");
   };
 
   const handleError = (error: any) => {
@@ -48,7 +48,7 @@ export const PoolSummary = ({
 
   const { mutate: harvestPlasma } = useWriteContract(
     stakingContract,
-    'withdrawReward',
+    "withdrawReward",
     {
       onConfirmation: handleConfirmation,
       onError: handleError,
@@ -57,7 +57,7 @@ export const PoolSummary = ({
   );
   const { response: totalLpTokensLockedInThisContract } = useReadContract(
     stakingContract,
-    'totalLpTokensLocked',
+    "totalLpTokensLocked",
     {
       autoUpdate: 15000,
     }
@@ -72,13 +72,13 @@ export const PoolSummary = ({
       await harvestPlasma();
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong');
+      toast.error("Something went wrong");
     } finally {
       setWaiting(false);
     }
   };
 
-  const { price: ufoPrice } = useCGPrice({ tokenId: 'ufo-gaming' });
+  const { price: ufoPrice } = useCGPrice({ tokenId: "ufo-gaming" });
 
   return (
     <BrandedBox flex="1" px="8" py="6">
@@ -111,7 +111,7 @@ export const PoolSummary = ({
                     {formatToken(totalLpTokensLockedInThisContract)} UFO
                   </Text>
                   <Text variant="caption">
-                    USD{' '}
+                    USD{" "}
                     {formatToUSD(
                       ufoPrice,
                       totalLpTokensLockedInThisContract ?? undefined
@@ -143,7 +143,7 @@ useReadContract needs the contract object from useContract, the name of the func
 In case you would like to update the value manually (on button click) you can use the mutate function returned in the hook.
 
 ```jsx
-const { mutate, response } = useReadContract(contract, 'functionName');
+const { mutate, response } = useReadContract(contract, "functionName");
 
 const handleClick = () => {
   // Do stuff Here

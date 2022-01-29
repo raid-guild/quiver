@@ -19,8 +19,9 @@ export const useReadContract = <
 ): {
   loading: boolean;
   error: Error | null;
-  response: //@ts-ignore
-  Awaited<ReturnType<ContractFunctions<TContract>[TFunctionName]>> | undefined;
+  response:
+    | Awaited<ReturnType<ContractFunctions<TContract>[TFunctionName]>>
+    | undefined;
   mutate: () => Promise<
     | {
         loading: boolean;
@@ -50,7 +51,6 @@ export const useReadContract = <
     } finally {
       setLoading(false);
     }
-    return;
   };
 
   useEffect(() => {

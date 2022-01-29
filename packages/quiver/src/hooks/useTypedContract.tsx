@@ -1,19 +1,19 @@
-import { Contract, ContractInterface } from '@ethersproject/contracts';
 import { JsonRpcProvider } from '@ethersproject/providers';
 
 import { useWallet } from '../WalletContext';
+import { ContractFactory, ContractInstance } from './types';
 /**
  * Returns an ethers contract instance which can be used with other hooks as well as directly calling functions on the contract.
  * @category Hooks
  */
-export const useContract = (
+export const useTypedContract = <TContract extends ContractInstance = any>(
   address: string,
-  ABI: ContractInterface,
+  typechainFactory: ContractFactory<TContract>,
   options?: {
     useStaticProvider?: boolean; // if the wallet is not connected use a static provider
   }
 ): {
-  contract: Contract | null;
+  contract: TContract | null;
   error: Error | null;
 } => {
   const { provider, isConnected, networks, defaultChainId } = useWallet();
@@ -28,7 +28,7 @@ export const useContract = (
 
   if (signerOrProvider) {
     return {
-      contract: new Contract(address, ABI, signerOrProvider),
+      contract: typechainFactory.connect(address, signerOrProvider),
       error: null,
     };
   }

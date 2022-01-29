@@ -16,7 +16,7 @@ const erc20Balance = useTokenBalance(erc20Contract);
 ### Custom Contract
 
 ```jsx
-const { contract: ufoContract } = useContract(
+const { contract: ufoContract } = useTypedContract(
   UFO_TOKEN_CONTRACT_ADDRESS,
   XToken__factory
 )
