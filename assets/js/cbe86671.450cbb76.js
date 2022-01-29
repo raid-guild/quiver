@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[925],{860:function(e){e.exports=JSON.parse('{"id":91,"name":"useTokenBalance","nextId":23,"permalink":"/quiver/api/quiver/function/useTokenBalance","previousId":47}')}}]);
