@@ -67,7 +67,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "homepage": "https://raidguild.github.io/quiver",
+  "homepage": "https://raid-guild.github.io/quiver",
   "repository": {
     "url": "https://github.com/raid-guild/quiver"
   }
