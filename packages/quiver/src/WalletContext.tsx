@@ -155,6 +155,8 @@ export const WalletProvider: React.FC<{
                 message: `You have switched to an unsupported chain, Disconnecting from Metamask...`,
               });
           }
+          // update wallet provider once the chain is changed
+          setWalletProvider(modalProvider);
         });
       }
     } catch (web3Error) {
