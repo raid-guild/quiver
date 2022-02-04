@@ -1,4 +1,4 @@
-# Add Gnonis Safe Integration
+# Add Gnosis Safe Integration
 
 Quiver already integrates with Gnosis Safe Apps using safe-apps-web3modal wrapper around web3modal. All you need to do is add a manifest.json file to the root of your project. The manifest.json file should look like below, change the values as needed.
 
