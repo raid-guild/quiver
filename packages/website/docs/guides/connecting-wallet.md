@@ -3,7 +3,7 @@
 Quiver exposes useful variables to connect to a wallet. Here is an example.
 
 ```jsx
-import { useWallet } from "@raidguild/quiver";
+import { formatAddress, useWallet } from "@raidguild/quiver";
 
 const ConnectWallet: React.FC = () => {
   const { connectWallet, isConnecting, isConnected, disconnect, address } =

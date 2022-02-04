@@ -16,6 +16,13 @@ yarn add @raidguild/quiver ethers web3modal
 
 ```jsx
 import { WalletProvider, NetworkConfig } from "@raidguild/quiver";
+
+// If using Authereum provider
+import Authereum from 'authereum';
+// If using Portis provider
+import Portis from '@portis/web3';
+// If using Frame provider
+import ethProvider from 'eth-provider';
 // If using wallet connect
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { IProviderOptions } from "web3modal";
@@ -43,9 +50,36 @@ const SUPPORTED_NETWORKS: NetworkConfig = {
     explorer: "http://localhost:1234",
     rpc: "http://localhost:8545",
   },
+	'0x89': {
+		chainId: '0x89',
+		name: 'Polygon',
+		symbol: 'MATIC',
+		explorer: 'https://polygonscan.com',
+		rpc: 'https://polygon-rpc.com/',
+	},
+	'0x13881': {
+		chainId: '0x13881',
+		name: 'Mumbai Testnet',
+		symbol: 'MATIC',
+		explorer: 'https://mumbai.polygonscan.com',
+		rpc: 'https://matic-mumbai.chainstacklabs.com',
+	},
 };
 
 const providerOptions: IProviderOptions = {
+  authereum: {
+		package: Authereum,
+	},
+  frame: {
+		package: ethProvider,
+	},
+	portis: {
+		package: Portis,
+		options: {
+      // Get the DAPP ID at https://dashboard.portis.io/
+			id: 'YOUR-PORTIS-DAPP-ID',
+		},
+	},
   walletconnect: {
     package: WalletConnectProvider,
     options: {
