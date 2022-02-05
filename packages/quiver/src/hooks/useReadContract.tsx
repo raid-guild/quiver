@@ -12,10 +12,10 @@ export const useReadContract = <
 >(
   contract: TContract | Contract | null,
   functionName: TFunctionName,
+  args: Parameters<ContractFunctions<TContract>[TFunctionName]>,
   options?: {
     autoUpdateInterval?: number;
-  },
-  ...args: Parameters<ContractFunctions<TContract>[TFunctionName]>
+  }
 ): {
   loading: boolean;
   error: Error | null;

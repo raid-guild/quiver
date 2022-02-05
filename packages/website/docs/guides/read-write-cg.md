@@ -58,6 +58,7 @@ export const PoolSummary = ({
   const { response: totalLpTokensLockedInThisContract } = useReadContract(
     stakingContract,
     "totalLpTokensLocked",
+    [],
     {
       autoUpdate: 15000,
     }
@@ -143,7 +144,7 @@ useReadContract needs the contract object from useContract, the name of the func
 In case you would like to update the value manually (on button click) you can use the mutate function returned in the hook.
 
 ```jsx
-const { mutate, response } = useReadContract(contract, "functionName");
+const { mutate, response } = useReadContract(contract, "functionName", []);
 
 const handleClick = () => {
   // Do stuff Here
