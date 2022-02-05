@@ -21,7 +21,7 @@ type WalletContextType = {
   isConnected: boolean;
   isMetamask: boolean;
   networks: NetworkConfig;
-  defaultChainId: string;
+  switchNetwork: (chainId: string) => void;
 };
 
 const WalletContext = createContext<WalletContextType>({
@@ -34,7 +34,7 @@ const WalletContext = createContext<WalletContextType>({
   isConnected: false,
   isMetamask: false,
   networks: {},
-  defaultChainId: '0x',
+  switchNetwork: () => undefined,
 });
 
 type WalletStateType = {
@@ -63,7 +63,7 @@ const isMetamaskProvider = (
 export const WalletProvider: React.FC<{
   web3modalOptions: Partial<ICoreOptions>;
   networks: NetworkConfig;
-  defaultChainId: string;
+  defaultChainId?: string;
   handleModalEvents?: (
     eventName: 'error' | 'accountsChanged' | 'chainChanged',
     error?: { code: string; message: string }
@@ -101,13 +101,34 @@ export const WalletProvider: React.FC<{
     return `0x${number.toString(16)}`;
   };
 
+  const switchNetwork = async (_chainId: string | number) => {
+    const chainId: string =
+      typeof _chainId === 'number' ? numberToHex(_chainId) : _chainId;
+    if (!networks[chainId]) {
+      throw new Error(`No network configuration for chainId: ${chainId}`);
+    }
+    if (!window.ethereum?.isMetaMask) {
+      throw new Error('Switching chain is only supported in Metamask');
+    }
+    await switchChainOnMetaMask(networks, chainId);
+  };
+
   const setWalletProvider = async (provider: any) => {
     const ethersProvider = new providers.Web3Provider(provider);
     let chainId: string =
       typeof provider.chainId === 'number'
         ? numberToHex(provider.chainId)
         : provider.chainId;
+
     if (!networks[chainId]) {
+      if (!defaultChainId) {
+        handleModalEvents &&
+          handleModalEvents('error', {
+            code: 'UNSUPPORTED_NETWORK',
+            message: `Network not supported, please switch to one of the supported networks`,
+          });
+        return;
+      }
       const success =
         isMetamaskProvider(ethersProvider) &&
         (await switchChainOnMetaMask(networks, defaultChainId));
@@ -203,7 +224,7 @@ export const WalletProvider: React.FC<{
         disconnect,
         isMetamask,
         networks,
-        defaultChainId,
+        switchNetwork,
       }}
     >
       {children}

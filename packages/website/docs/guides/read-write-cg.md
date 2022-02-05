@@ -131,7 +131,7 @@ export const PoolSummary = ({
 
 There is a lot going on in the example above let's break it down.
 
-`useContract` is a hook that allows you to get the Contract object from the contract which is used by useReadContract and useWriteContract. It can also use the static RPC provider if the wallet is not connected if you set `useStaticProvider: true` in options.
+`useContract` is a hook that allows you to get the Contract object from the contract which is used by useReadContract and useWriteContract. It can also use the static RPC provider if the wallet is not connected if you set `staticProvider: {enable: true, chainId: "0x1"}` in options. This will then use the provided chainId to create a static provider.
 
 useContract needs the contract address and the Contract Factory from typechain. Make sure you copy the generated types from hardhat and paste it in the frontend project directory. In my case I have it in the `src/types/typechain` folder.
 

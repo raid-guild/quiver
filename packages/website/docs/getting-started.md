@@ -18,11 +18,11 @@ yarn add @raidguild/quiver ethers web3modal
 import { WalletProvider, NetworkConfig } from "@raidguild/quiver";
 
 // If using Authereum provider
-import Authereum from 'authereum';
+import Authereum from "authereum";
 // If using Portis provider
-import Portis from '@portis/web3';
+import Portis from "@portis/web3";
 // If using Frame provider
-import ethProvider from 'eth-provider';
+import ethProvider from "eth-provider";
 // If using wallet connect
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { IProviderOptions } from "web3modal";
@@ -50,36 +50,36 @@ const SUPPORTED_NETWORKS: NetworkConfig = {
     explorer: "http://localhost:1234",
     rpc: "http://localhost:8545",
   },
-	'0x89': {
-		chainId: '0x89',
-		name: 'Polygon',
-		symbol: 'MATIC',
-		explorer: 'https://polygonscan.com',
-		rpc: 'https://polygon-rpc.com/',
-	},
-	'0x13881': {
-		chainId: '0x13881',
-		name: 'Mumbai Testnet',
-		symbol: 'MATIC',
-		explorer: 'https://mumbai.polygonscan.com',
-		rpc: 'https://matic-mumbai.chainstacklabs.com',
-	},
+  "0x89": {
+    chainId: "0x89",
+    name: "Polygon",
+    symbol: "MATIC",
+    explorer: "https://polygonscan.com",
+    rpc: "https://polygon-rpc.com/",
+  },
+  "0x13881": {
+    chainId: "0x13881",
+    name: "Mumbai Testnet",
+    symbol: "MATIC",
+    explorer: "https://mumbai.polygonscan.com",
+    rpc: "https://matic-mumbai.chainstacklabs.com",
+  },
 };
 
 const providerOptions: IProviderOptions = {
   authereum: {
-		package: Authereum,
-	},
+    package: Authereum,
+  },
   frame: {
-		package: ethProvider,
-	},
-	portis: {
-		package: Portis,
-		options: {
+    package: ethProvider,
+  },
+  portis: {
+    package: Portis,
+    options: {
       // Get the DAPP ID at https://dashboard.portis.io/
-			id: 'YOUR-PORTIS-DAPP-ID',
-		},
-	},
+      id: "YOUR-PORTIS-DAPP-ID",
+    },
+  },
   walletconnect: {
     package: WalletConnectProvider,
     options: {
@@ -112,6 +112,7 @@ const App = () => (
     <WalletProvider
       web3modalOptions={web3modalOptions}
       networks={SUPPORTED_NETWORKS}
+      // Optional if you want to auto switch the network
       defaultChainId={DEFAULT_NETWORK}
       // Optional but useful to handle events.
       handleModalEvents={(eventName, error) => {
@@ -131,7 +132,7 @@ const App = () => (
 Notes
 
 - You need to have an infura account setup / or any other RPC provider for static provider to work. This is needed to interact with the contract when the user has not connected to the wallet.
-- Default network is needed to switch to the network if the user is connected to a different network.
+- Default chain id is needed to switch to the network if the user is connected to a different network. If you do not provide the prop, the network will not auto switch.
 - You can integrate wallet providers that are supported by web3modal.
 
 3. Now, you are ready to use hooks within your routes.

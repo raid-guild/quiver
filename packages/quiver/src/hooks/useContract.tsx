@@ -10,19 +10,23 @@ export const useContract = (
   address: string,
   ABI: ContractInterface,
   options?: {
-    useStaticProvider?: boolean; // if the wallet is not connected use a static provider
+    staticProvider?: {
+      // if the wallet is not connected use a static provider with the given chain id
+      enable: boolean;
+      chainId: string;
+    };
   }
 ): {
   contract: Contract | null;
   error: Error | null;
 } => {
-  const { provider, isConnected, networks, defaultChainId } = useWallet();
+  const { provider, isConnected, networks } = useWallet();
 
   const signerOrProvider =
-    options?.useStaticProvider && !isConnected
+    options?.staticProvider?.enable && !isConnected
       ? new JsonRpcProvider(
-          networks[defaultChainId].rpc,
-          Number(defaultChainId)
+          networks[options?.staticProvider?.chainId].rpc,
+          Number(options?.staticProvider?.chainId)
         )
       : provider?.getSigner();
 

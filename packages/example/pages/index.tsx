@@ -39,7 +39,10 @@ const DAIBalance = () => {
     '0x6b175474e89094c44da98b954eedeac495271d0f',
     ERC20_ABI,
     {
-      useStaticProvider: true,
+      staticProvider: {
+        enable: true,
+        chainId: '0x1',
+      }
     }
   );
 
@@ -72,7 +75,7 @@ const DAIBalance = () => {
 
 export default function Home() {
 
-  const { address } = useWallet();
+  const { address, switchNetwork } = useWallet();
   const { ens } = useENS({address: address ?? undefined});
   return (
     <>
@@ -91,6 +94,9 @@ export default function Home() {
         </div>
 
         <div>Resolved ENS: {ens}</div>
+        <button onClick={() => switchNetwork("0x4")}>Switch to Rinkeby</button>
+        <button onClick={() => switchNetwork("0x1")}>Switch to Mainnet</button>
         </>
+
   )
 }
