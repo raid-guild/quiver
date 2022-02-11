@@ -1,97 +1,118 @@
-const path = require('path');
+// @ts-check
+// Note: type annotations allow type checking and IDEs autocompletion
+
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-const pkg = require('../quiver/package.json');
 
-// With JSDoc @type annotations, IDEs can provide config autocompletion
-/** @type {import('@docusaurus/types').DocusaurusConfig} */
-(module.exports = {
-  title: 'Quiver',
-  tagline:
-    'A collection of React hooks and components, making it easy to develop frontends for Ethereum dApps.',
-  url: 'https://raid-guild.github.io/',
-  baseUrl: '/quiver/',
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
-  organizationName: 'raid-guild',
-  projectName: 'quiver',
-  trailingSlash: true,
+/** @type {import('@docusaurus/types').Config} */
+const config = {
+    title: 'Quiver',
+    tagline: 'A collection of React hooks and components for Ethereum dApps',
+    url: 'https://your-docusaurus-test-site.com',
+    baseUrl: '/',
+    onBrokenLinks: 'throw',
+    onBrokenMarkdownLinks: 'warn',
+    favicon: 'img/favicon.ico',
+    organizationName: 'facebook', // Usually your GitHub org/user name.
+    projectName: 'quiver', // Usually your repo name.
 
-  plugins: [
-    [
-      'docusaurus-plugin-typedoc-api',
-      {
-        projectRoot: path.join(__dirname, '..', 'quiver'),
-        packages: ['.'],
-      },
-    ],
-  ],
-
-  presets: [
-    [
-      '@docusaurus/preset-classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
-        docs: {
-          routeBasePath: '/',
-          sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/raid-guild/quiver/edit/main/website/',
-        },
-        theme: {
-          customCss: require.resolve('./src/css/custom.css'),
-        },
-      }),
-    ],
-  ],
-
-  themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      navbar: {
-        title: 'Quiver',
-        logo: {
-          alt: 'Raid Guild Logo',
-          src: 'img/logo.png',
-        },
-        items: [
-          {
-            label: `v${pkg.version}`,
-            position: 'left',
-            href: `https://www.npmjs.com/package/${pkg.name}`,
-          },
-          {
-            type: 'doc',
-            docId: 'introduction',
-            position: 'left',
-            label: 'Docs',
-          },
-          {
-            to: 'api',
-            label: 'API',
-            position: 'left',
-          },
-          {
-            href: 'https://github.com/raid-guild/quiver',
-            label: 'GitHub',
-            position: 'right',
-          },
+    presets: [
+        [
+            'classic',
+            /** @type {import('@docusaurus/preset-classic').Options} */
+            ({
+                docs: {
+                    sidebarPath: require.resolve('./sidebars.js'),
+                    // Please change this to your repo.
+                    editUrl:
+                        'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+                },
+                blog: {
+                    showReadingTime: true,
+                    // Please change this to your repo.
+                    editUrl:
+                        'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+                },
+                theme: {
+                    customCss: require.resolve('./src/css/custom.css'),
+                },
+            }),
         ],
-      },
-      footer: {
-        style: 'dark',
-        copyright: `Copyright © ${new Date().getFullYear()} Raid Guild.`,
-      },
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-      },
-      algolia: {
-        appId: 'ZZXUX8PJ0B',
-        apiKey: '6aa9b990400c66b254b6fa1899fa63fb',
-        indexName: 'quiver',
-        contextualSearch: false,
-        searchParameters: {},
-      },
-    }),
-});
+    ],
+
+    themeConfig:
+        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+        ({
+            navbar: {
+                title: 'My Site',
+                logo: {
+                    alt: 'My Site Logo',
+                    src: 'img/logo.svg',
+                },
+                items: [
+                    {
+                        type: 'doc',
+                        docId: 'introduction',
+                        position: 'left',
+                        label: 'Introduction',
+                    },
+                    {
+                        href: 'https://github.com/raid-guild/quiver',
+                        label: 'GitHub',
+                        position: 'right',
+                    },
+                ],
+            },
+            footer: {
+                style: 'dark',
+                links: [
+                    {
+                        title: 'Docs',
+                        items: [
+                            {
+                                label: 'Introduction',
+                                to: '/docs/introduction',
+                            },
+                        ],
+                    },
+                    {
+                        title: 'Community',
+                        items: [
+                            {
+                                label: 'Stack Overflow',
+                                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                            },
+                            {
+                                label: 'Discord',
+                                href: 'https://discordapp.com/invite/docusaurus',
+                            },
+                            {
+                                label: 'Twitter',
+                                href: 'https://twitter.com/raidguild',
+                            },
+                        ],
+                    },
+                    {
+                        title: 'More',
+                        items: [
+                            {
+                                label: 'Blog',
+                                to: '/blog',
+                            },
+                            {
+                                label: 'GitHub',
+                                href: 'https://github.com/facebook/docusaurus',
+                            },
+                        ],
+                    },
+                ],
+                copyright: `Copyright © ${new Date().getFullYear()} Quiver, Inc. Built with Docusaurus.`,
+            },
+            prism: {
+                theme: lightCodeTheme,
+                darkTheme: darkCodeTheme,
+            },
+        }),
+};
+
+module.exports = config;
