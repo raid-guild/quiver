@@ -16,6 +16,7 @@ const config = {
     organizationName: 'facebook', // Usually your GitHub org/user name.
     projectName: 'quiver', // Usually your repo name.
 
+    plugins: ['docusaurus-tailwindcss'],
     presets: [
         [
             'classic',
