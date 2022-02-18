@@ -113,7 +113,7 @@ const App = () => (
       web3modalOptions={web3modalOptions}
       networks={SUPPORTED_NETWORKS}
       // Optional if you want to auto switch the network
-      defaultChainId={DEFAULT_NETWORK}
+      defaultChainId={DEFAULT_CHAIN_ID}
       // Optional but useful to handle events.
       handleModalEvents={(eventName, error) => {
         if (error) {
