@@ -56,17 +56,17 @@ const config = {
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             navbar: {
-                title: 'My Site',
+                title: 'Quiver',
                 logo: {
-                    alt: 'My Site Logo',
-                    src: 'img/logo.svg',
+                    alt: 'Quiver Logo',
+                    src: 'img/quiver-logo-white.png',
                 },
                 items: [
                     {
                         type: 'doc',
                         docId: 'introduction',
                         position: 'left',
-                        label: 'Introduction',
+                        label: 'Docs',
                     },
                     {
                         href: 'https://github.com/raid-guild/quiver',
@@ -120,10 +120,10 @@ const config = {
                 ],
                 copyright: `Copyright © ${new Date().getFullYear()} Quiver, Inc. Built with Docusaurus.`,
             },
-            prism: {
-                theme: lightCodeTheme,
-                darkTheme: darkCodeTheme,
-            },
+            // prism: {
+            //     theme: lightCodeTheme,
+            //     darkTheme: darkCodeTheme,
+            // },
         }),
 };
 
