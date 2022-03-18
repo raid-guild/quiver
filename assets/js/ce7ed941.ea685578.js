@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[573],{3188:function(e){e.exports=JSON.parse('{"id":63,"name":"useReadContract","nextId":107,"permalink":"/quiver/api/quiver/function/useReadContract","previousId":134}')}}]);
