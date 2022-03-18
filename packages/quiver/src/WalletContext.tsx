@@ -11,7 +11,7 @@ import { ICoreOptions } from 'web3modal';
 
 import { switchChainOnMetaMask } from './metamask';
 
-type WalletContextType = {
+export type WalletContextType = {
   provider: providers.Web3Provider | null | undefined;
   chainId: string | null | undefined;
   address: string | null | undefined;
@@ -196,7 +196,7 @@ export const WalletProvider: React.FC<{
        * This prevents unnecessary popup on page load.
        */
       const isMetamaskUnlocked =
-        (await window.ethereum?._metamask?.isUnlocked()) ?? false;
+        (await window.ethereum?._metamask?.isUnlocked?.()) ?? false;
       const modal = getModal();
       const _isGnosisSafe = await modal.isSafeApp();
 
