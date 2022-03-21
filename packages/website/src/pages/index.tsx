@@ -90,7 +90,7 @@ const Home: React.FC = () => {
                             </button>
                         </Link>
                         <Link
-                            href="/docs"
+                            href="/introduction"
                             className="hover:no-underline hover:opacity-80 hover:-translate-y-2 transition-transform"
                         >
                             <button className="flex justify-center space-x-3 text-white bg-gradient-to-br from-raidPurple to-raidRed p-3 rounded-sm">

@@ -90,15 +90,7 @@ const config = {
             footer: {
                 style: 'dark',
                 links: [
-                    {
-                        title: 'Docs',
-                        items: [
-                            {
-                                label: 'Introduction',
-                                to: '/docs/introduction',
-                            },
-                        ],
-                    },
+                   
                     {
                         title: 'Community',
                         items: [
