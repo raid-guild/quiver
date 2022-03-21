@@ -5,47 +5,47 @@ const pkg = require('../../../quiver/package.json');
 const Home: React.FC = () => {
     return (
         <div className="bg-zinc-900 min-h-screen bg-arrow-bg bg-center md:bg-top bg-cover bg-no-repeat">
-            <div className="p-8 sm:pl-16 md:pl-32 pt-10 md:pt-40 font-mono max-w-lg sm:max-w-xl md:max-w-2xl">
+            <div className="p-8 sm:pl-16 md:pl-40 pt-10 md:pt-40 font-sans tracking-wide max-w-lg sm:max-w-xl md:max-w-3xl">
                 <div className="flex space-x-4">
                     <img
                         src="/quiver/img/quiver-logo-white.png"
                         alt="Quiver logo"
                         className="h-12 w-auto"
                     />
-                    <p className="text-xs p-1 rounded bg-raidRed bg-opacity-20 self-center">
-                    {`v${pkg.version}`}
+                    <p className="text-xs p-1 rounded bg-raidRed bg-opacity-50 self-center text-white">
+                        {`v${pkg.version}`}
                     </p>
                 </div>
-                <p className="text-lg py-6">
+                <p className="text-lg py-6 text-white">
                     A collection of React hooks and components for Ethereum
                     dApps
                 </p>
                 <div className="flex flex-col space-y-12">
-                    <div className="flex flex-col md:flex-row space-y-2 md:space-x-2 md:space-y-0 md:align-top  transition">
-                        <pre className="text-sm">
-                            yarn add @raidguild/quiver ethers web3modal
-                        </pre>
-                        <button className="p-2 border-2 rounded-md hover:bg-raidRed hover:bg-opacity-60 hover:backdrop-blur-sm">
-                            <div className="flex justify-center space-x-2">
+                    <div className="flex flex-col md:flex-row">
+                        <pre className="bg-stone-800 text-sm text-white dark:ring-1 dark:ring-inset dark:ring-raidRed/40 flex justify-between align-middle w-full gap-3">
+                            <div className="flex gap-2 font-mono">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6"
+                                    className="h-4 w-4 text-raidRed"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
+                                    strokeWidth={2}
                                 >
                                     <path
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                                        d="M9 5l7 7-7 7"
                                     />
                                 </svg>
-                                <span>Copy</span>
+                                yarn add @raidguild/quiver ethers web3modal
                             </div>
-                        </button>
+                            <button className="py-1 px-2 bg-stone-900 rounded text-xs hover:bg-stone-700">
+                                Copy
+                            </button>
+                        </pre>
                     </div>
-                    <div>
+                    <div className="text-white">
                         <p>Powered by</p>
                         <ul className="list-disc">
                             <li>
@@ -68,7 +68,7 @@ const Home: React.FC = () => {
                             href="https://github.com/raid-guild/quiver"
                             className="hover:no-underline hover:opacity-80 hover:-translate-y-2 transition-transform"
                         >
-                            <button className="flex justify-center space-x-3 text-white bg-gradient-to-r from-raidRed to-raidPurple p-3 rounded-sm">
+                            <button className="flex justify-center space-x-2 text-white bg-gradient-to-r from-raidRed to-raidPurple p-3 rounded-md">
                                 <span>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +93,7 @@ const Home: React.FC = () => {
                             href="/introduction"
                             className="hover:no-underline hover:opacity-80 hover:-translate-y-2 transition-transform"
                         >
-                            <button className="flex justify-center space-x-3 text-white bg-gradient-to-br from-raidPurple to-raidRed p-3 rounded-sm">
+                            <button className="flex justify-center space-x-2 text-white bg-gradient-to-br from-raidPurple to-raidRed p-3 rounded-md">
                                 <span>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"

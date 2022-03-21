@@ -21,10 +21,10 @@ const config = {
         [
             'docusaurus-plugin-typedoc-api',
             {
-              projectRoot: path.join(__dirname, '..', 'quiver'),
-              packages: ['.'],
+                projectRoot: path.join(__dirname, '..', 'quiver'),
+                packages: ['.'],
             },
-          ],
+        ],
         async function DocusaurusTailwind(context, options) {
             return {
                 name: 'docusaurus-tailwindcss',
@@ -35,7 +35,7 @@ const config = {
                     return postcssOptions;
                 },
             };
-        }
+        },
     ],
     presets: [
         [
@@ -45,8 +45,9 @@ const config = {
                 docs: {
                     routeBasePath: '/',
                     sidebarPath: require.resolve('./sidebars.js'),
-                    editUrl: 'https://github.com/raid-guild/quiver/edit/main/website/',
-                  },
+                    editUrl:
+                        'https://github.com/raid-guild/quiver/edit/main/website/',
+                },
                 theme: {
                     customCss: require.resolve('./src/css/custom.css'),
                 },
@@ -63,34 +64,32 @@ const config = {
                     src: 'img/quiver-logo-white.png',
                 },
                 items: [
-                   
                     {
-                      type: 'doc',
-                      docId: 'introduction',
-                      position: 'left',
-                      label: 'Docs',
+                        type: 'doc',
+                        docId: 'introduction',
+                        position: 'left',
+                        label: 'Docs',
                     },
                     {
-                      to: 'api',
-                      label: 'API',
-                      position: 'left',
+                        to: 'api',
+                        label: 'API',
+                        position: 'left',
                     },
                     {
                         label: `v${pkg.version}`,
                         position: 'left',
                         href: `https://www.npmjs.com/package/${pkg.name}`,
-                      },
-                    {
-                      href: 'https://github.com/raid-guild/quiver',
-                      label: 'GitHub',
-                      position: 'right',
                     },
-                  ]
+                    {
+                        href: 'https://github.com/raid-guild/quiver',
+                        label: 'GitHub',
+                        position: 'right',
+                    },
+                ],
             },
             footer: {
                 style: 'dark',
                 links: [
-                   
                     {
                         title: 'Community',
                         items: [
@@ -104,7 +103,6 @@ const config = {
                             },
                         ],
                     },
-                    
                 ],
                 copyright: `Copyright © ${new Date().getFullYear()} Raid Guild.`,
             },
