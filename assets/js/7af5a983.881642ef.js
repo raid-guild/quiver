@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[949],{2051:function(e){e.exports=JSON.parse('{"id":39,"name":"useWallet","nextId":83,"permalink":"/quiver/api/quiver/function/useWallet","previousId":168}')}}]);

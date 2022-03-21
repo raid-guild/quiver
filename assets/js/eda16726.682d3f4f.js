@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[604],{3305:function(e){e.exports=JSON.parse('{"id":160,"name":"ContractInstance","nextId":152,"permalink":"/quiver/api/quiver/interface/ContractInstance","previousId":154}')}}]);

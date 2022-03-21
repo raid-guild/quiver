@@ -5,7 +5,7 @@
   <Description>Search Quiver</Description>
   <InputEncoding>UTF-8</InputEncoding>
   <Image width="16" height="16" type="image/x-icon">https://raid-guild.github.io/quiver/img/favicon.ico</Image>
-  <Url type="text/html" method="get" template="https://raid-guild.github.io//quiver/search?q={searchTerms}"/>
-  <Url type="application/opensearchdescription+xml" rel="self" template="https://raid-guild.github.io//quiver/opensearch.xml" />
-  <moz:SearchForm>https://raid-guild.github.io//quiver/</moz:SearchForm>
+  <Url type="text/html" method="get" template="https://raid-guild.github.io/quiver/search?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://raid-guild.github.io/quiver/opensearch.xml" />
+  <moz:SearchForm>https://raid-guild.github.io/quiver/</moz:SearchForm>
 </OpenSearchDescription>
