@@ -1,5 +1,6 @@
 import Link from '@docusaurus/Link';
 import React from 'react';
+const pkg = require('../../../quiver/package.json');
 
 const Home: React.FC = () => {
     return (
@@ -7,12 +8,12 @@ const Home: React.FC = () => {
             <div className="p-8 sm:pl-16 md:pl-32 pt-10 md:pt-40 font-mono max-w-lg sm:max-w-xl md:max-w-2xl">
                 <div className="flex space-x-4">
                     <img
-                        src="/img/quiver-logo-white.png"
+                        src="/quiver/img/quiver-logo-white.png"
                         alt="Quiver logo"
                         className="h-12 w-auto"
                     />
                     <p className="text-xs p-1 rounded bg-raidRed bg-opacity-20 self-center">
-                        v.0.2.0
+                    {`v${pkg.version}`}
                     </p>
                 </div>
                 <p className="text-lg py-6">
