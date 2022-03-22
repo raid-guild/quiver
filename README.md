@@ -26,7 +26,7 @@ Quiver comes with many useful features that are otherwise configured by develope
 - react >= 16
 - web3modal
 
-Docs can be found at https://raid-guild.github.io/quiver/
+Read the docs [here](https://raid-guild.github.io/quiver/)
 
 ## Thanks
 

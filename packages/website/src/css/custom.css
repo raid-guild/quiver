@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --ifm-color-primary: #6d11b6;
+    --ifm-color-primary-dark: #620fa4;
+    --ifm-color-primary-darker: #5d0e9b;
+    --ifm-color-primary-darkest: #4c0c7f;
+    --ifm-color-primary-light: #7813c8;
+    --ifm-color-primary-lighter: #7d14d1;
+    --ifm-color-primary-lightest: #8d19ea;
+}
+
+[data-theme='dark'] {
+    --ifm-color-primary: #ff3864;
+    --ifm-color-primary-dark: #ff194c;
+    --ifm-color-primary-darker: #ff0940;
+    --ifm-color-primary-darkest: #da0030;
+    --ifm-color-primary-light: #ff577c;
+    --ifm-color-primary-lighter: #ff6788;
+    --ifm-color-primary-lightest: #ff95ad;
+}
