@@ -1,5 +1,6 @@
 import Link from '@docusaurus/Link';
 import React from 'react';
+import ClipboardCopyButton from '../components/ClipboardCopyButton';
 const pkg = require('../../../quiver/package.json');
 
 const Home: React.FC = () => {
@@ -21,9 +22,14 @@ const Home: React.FC = () => {
                     dApps
                 </p>
                 <div className="flex flex-col space-y-12">
-                    <div className="flex flex-col md:flex-row">
-                        <pre className="bg-stone-800 text-sm text-white dark:ring-1 dark:ring-inset dark:ring-raidRed/40 flex justify-between align-middle w-full gap-3">
-                            <div className="flex gap-2 font-mono">
+                    <div className="flex flex-col gap-3 dark:ring-1 dark:ring-inset dark:ring-raidRed/40 p-2 rounded-lg">
+                        <div className="flex justify-between px-4">
+                            <p className="border-b border-raidRed">Yarn</p>
+                            <ClipboardCopyButton copyText="yarn add @raidguild/quiver ethers web3modal" />
+                        </div>
+
+                        <pre className="bg-stone-800 text-sm text-white flex justify-between align-middle w-full gap-3">
+                            <div className="flex gap-2">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className="h-4 w-4 text-raidRed"
@@ -38,11 +44,10 @@ const Home: React.FC = () => {
                                         d="M9 5l7 7-7 7"
                                     />
                                 </svg>
-                                yarn add @raidguild/quiver ethers web3modal
+                                <code>
+                                    yarn add @raidguild/quiver ethers web3modal
+                                </code>
                             </div>
-                            <button className="py-1 px-2 bg-stone-900 rounded text-xs hover:bg-stone-700">
-                                Copy
-                            </button>
                         </pre>
                     </div>
                     <div className="text-white">
