@@ -6,13 +6,13 @@ sidebar_position: 2
 
 Quiver requires some peer dependencies to be installed with the project.
 
-1. Install the dependencies
+Install the dependencies
 
 ```bash
 yarn add @raidguild/quiver ethers web3modal
 ```
 
-2. Wrap your app with WalletProvider
+Wrap your app with WalletProvider
 
 ```jsx
 import { WalletProvider, NetworkConfig } from "@raidguild/quiver";
@@ -129,11 +129,11 @@ const App = () => (
 );
 ```
 
-Notes
+#### Notes
 
-- You need to have an infura account setup / or any other RPC provider for static provider to work. This is needed to interact with the contract when the user has not connected to the wallet.
-- Default chain id is needed to switch to the network if the user is connected to a different network. If you do not provide the prop, the network will not auto switch.
-- You can integrate wallet providers that are supported by web3modal.
+* You need to have an infura account setup / or any other RPC provider for static provider to work. This is needed to interact with the contract when the user has not connected to the wallet.
+* Default chain id is needed to switch to the network if the user is connected to a different network. If you do not provide the prop, the network will not auto switch.
+* You can integrate wallet providers that are supported by web3modal.
 
-3. Now, you are ready to use hooks within your routes.
-4. Check out the [API](/api) and Guides for detailed documentation
+Now, you are ready to use hooks within your routes.
+Check out the [API](/api) and Guides for detailed documentation
