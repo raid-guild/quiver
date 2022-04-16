@@ -10,6 +10,8 @@
     --ifm-color-primary-light: #7813c8;
     --ifm-color-primary-lighter: #7d14d1;
     --ifm-color-primary-lightest: #8d19ea;
+
+    --ifm-font-size-base: 100%;
 }
 
 [data-theme='dark'] {
@@ -20,4 +22,98 @@
     --ifm-color-primary-light: #ff577c;
     --ifm-color-primary-lighter: #ff6788;
     --ifm-color-primary-lightest: #ff95ad;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--ifm-heading-color);
+    font-family: var(--ifm-heading-font-family);
+    font-weight: var(--ifm-heading-font-weight);
+    line-height: var(--ifm-heading-line-height);
+    margin: var(--ifm-heading-margin-top) 0 var(--ifm-heading-margin-bottom) 0;
+}
+
+h1 {
+    font-size: var(--ifm-h1-font-size);
+}
+
+h2 {
+    font-size: var(--ifm-h2-font-size);
+}
+
+h3 {
+    font-size: var(--ifm-h3-font-size);
+}
+
+h4 {
+    font-size: var(--ifm-h4-font-size);
+}
+
+h5 {
+    font-size: var(--ifm-h5-font-size);
+}
+
+h6 {
+    font-size: var(--ifm-h6-font-size);
+}
+
+svg {
+    display: unset;
+}
+
+ul,
+ol {
+    margin: 0 0 var(--ifm-list-margin);
+    padding-left: var(--ifm-list-left-padding);
+}
+
+ul {
+    list-style-type: disc;
+}
+
+code {
+    background-color: var(--ifm-code-background);
+    border: 0.1rem solid rgba(0, 0, 0, 0.1);
+    border-radius: var(--ifm-code-border-radius);
+    font-family: var(--ifm-font-family-monospace);
+    font-size: var(--ifm-code-font-size);
+    padding: var(--ifm-code-padding-vertical) var(--ifm-code-padding-horizontal);
+    vertical-align: middle;
+}
+
+a code {
+    color: inherit;
+}
+
+pre {
+    background-color: var(--ifm-pre-background);
+    border-radius: var(--ifm-pre-border-radius);
+    color: var(--ifm-pre-color);
+    font: var(--ifm-code-font-size) / var(--ifm-pre-line-height)
+        var(--ifm-font-family-monospace);
+    margin: 0 0 var(--ifm-spacing-vertical);
+    overflow: auto;
+    padding: var(--ifm-pre-padding);
+}
+
+pre code {
+    background-color: transparent;
+    border: none;
+    font-size: 100%;
+    line-height: inherit;
+    padding: 0;
+}
+
+kbd {
+    background-color: var(--ifm-color-emphasis-0);
+    border: 1px solid var(--ifm-color-emphasis-400);
+    border-radius: 0.2rem;
+    box-shadow: inset 0 -1px 0 var(--ifm-color-emphasis-400);
+    color: var(--ifm-color-emphasis-800);
+    font: 80% var(--ifm-font-family-monospace);
+    padding: 0.15rem 0.3rem;
 }

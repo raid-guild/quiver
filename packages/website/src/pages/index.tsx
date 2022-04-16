@@ -24,11 +24,13 @@ const Home: React.FC = () => {
                 <div className="flex flex-col space-y-12">
                     <div className="flex flex-col gap-3 dark:ring-1 dark:ring-inset dark:ring-raidRed/40 p-2 rounded-lg">
                         <div className="flex justify-between px-4">
-                            <p className="border-b border-raidRed">Yarn</p>
+                            <p className="border-b border-raidRed text-white">
+                                Yarn
+                            </p>
                             <ClipboardCopyButton copyText="yarn add @raidguild/quiver ethers web3modal" />
                         </div>
 
-                        <pre className="bg-stone-800 text-sm text-white flex justify-between align-middle w-full gap-3">
+                        <pre className="bg-raidPurple/20 text-sm text-white flex justify-between align-middle w-full gap-3">
                             <div className="flex gap-2">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -107,9 +109,9 @@ const Home: React.FC = () => {
                                         fill="currentColor"
                                     >
                                         <path
-                                            fill-rule="evenodd"
+                                            fillRule="evenodd"
                                             d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
-                                            clip-rule="evenodd"
+                                            clipRule="evenodd"
                                         />
                                     </svg>
                                 </span>

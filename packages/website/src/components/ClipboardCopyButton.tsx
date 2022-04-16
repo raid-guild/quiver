@@ -30,7 +30,7 @@ const ClipboardCopyButton = ({ copyText }) => {
         <div>
             <button
                 onClick={handleCopyClick}
-                className={`py-1 px-3 ${
+                className={`text-white py-1 px-3 ${
                     isCopied ? 'bg-raidRed' : 'bg-stone-900'
                 }  rounded text-xs hover:bg-stone-700`}
             >

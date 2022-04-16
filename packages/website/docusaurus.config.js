@@ -1,13 +1,13 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 const path = require('path');
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+// const lightCodeTheme = require('prism-react-renderer/themes/github');
+// const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const pkg = require('../quiver/package.json');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-    title: 'Quiver',
+    title: 'quiver',
     tagline: 'A collection of React hooks and components for Ethereum dApps',
     url: 'https://raid-guild.github.io/',
     baseUrl: '/quiver/',
@@ -39,7 +39,7 @@ const config = {
     ],
     presets: [
         [
-            '@docusaurus/preset-classic',
+            'classic',
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
                 docs: {
@@ -61,7 +61,8 @@ const config = {
             navbar: {
                 logo: {
                     alt: 'Quiver Logo',
-                    src: 'img/quiver-logo-white.png',
+                    src: 'img/quiver-logo-black.svg',
+                    srcDark: 'img/quiver-logo-white.svg',
                 },
                 items: [
                     {
