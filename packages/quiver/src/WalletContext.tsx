@@ -60,7 +60,7 @@ const isMetamaskProvider = (
 /**
  * @category Providers
  */
-export const WalletProvider: React.FC<{
+export const WalletProvider: React.FC<React.PropsWithChildren<{
   web3modalOptions: Partial<ICoreOptions>;
   networks: NetworkConfig;
   defaultChainId?: string;
@@ -68,7 +68,7 @@ export const WalletProvider: React.FC<{
     eventName: 'error' | 'accountsChanged' | 'chainChanged',
     error?: { code: string; message: string }
   ) => void;
-}> = ({
+}>> = ({
   children,
   web3modalOptions,
   networks,

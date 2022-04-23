@@ -8,6 +8,13 @@ A collection of React hooks and components, making it easy to develop frontends 
 - Built-in support for connecting to wallets using [Web3Modal](https://github.com/Web3Modal/web3modal).
 - Full support for TypeScript out of the box, including fully-typed contracts with [TypeChain](https://github.com/dethcrypto/TypeChain).
 
+## Starter
+
+There are two starters projects which you can use to get started with smart contracts and web3 development
+
+- [Hardhat + Create React App](https://github.com/midgerate/smart-contract-cra-starter)
+- [Hardhat + Next.js](https://github.com/midgerate/smart-contract-nextjs-starter)
+
 ## Hidden Nuggets
 
 Quiver comes with many useful features that are otherwise configured by developers all the time.

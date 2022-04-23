@@ -108,8 +108,8 @@ const config = {
                 copyright: `Copyright © ${new Date().getFullYear()} Raid Guild.`,
             },
             algolia: {
-                appId: 'ZZXUX8PJ0B',
-                apiKey: '6aa9b990400c66b254b6fa1899fa63fb',
+                appId: 'E0R6ZBEM0B',
+                apiKey: '57a1ee066f18aad91d4f99eebae04aa9',
                 indexName: 'quiver',
                 contextualSearch: false,
                 searchParameters: {},
